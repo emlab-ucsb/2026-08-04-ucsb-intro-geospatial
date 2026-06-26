@@ -53,7 +53,7 @@ Illustrator, or Inkscape. In this episode we will focus on two geoms
 Let's start by loading in the appropriate packages and data. Remember that we will have to load libraries and data at the start of each R script. 
 
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 
@@ -76,7 +76,7 @@ want to plot the "lifeExp" column of the gapminder data frame on the x-axis. We 
 for histograms.
 
 
-```r
+``` r
 ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
   geom_histogram()
 ```
@@ -89,11 +89,11 @@ ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
 By itself, the call to `ggplot` isn't enough to draw a figure:
 
 
-```r
+``` r
 ggplot(data = gapminder, mapping = aes(x = lifeExp))
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-blank-plot-1.png" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-blank-plot-1.png" alt="" style="display: block; margin: auto;" />
 
 We need to tell `ggplot` how we want to visually represent the data, which we
 do by adding a geom layer. In our example, we used `geom_histogram()`, which
@@ -101,13 +101,13 @@ tells `ggplot` we want to visually represent the
 distribution of one variable (in our case "lifeExp"):
 
 
-```r
+``` r
 ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
   geom_histogram()
 ```
 
-```{.output}
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+``` output
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
 <div class="figure" style="text-align: center">
@@ -128,16 +128,16 @@ expectancy:
 ## Solution
 
 
-```r
+``` r
 ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +   
  geom_histogram()
 ```
 
-```{.output}
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+``` output
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-ch1-sol-1.png" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-ch1-sol-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -152,7 +152,7 @@ recent year and only
 from countries in the Americas.
 
 
-```r
+``` r
 gapminder_small <- gapminder %>% 
   filter(year == 2007 & continent == "Americas")
 ```
@@ -162,7 +162,7 @@ We will plot countries on the x-axis (listed in alphabetic order
 by default) and gdp per capita on the y-axis.
 
 
-```r
+``` r
 ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
   geom_col()
 ```
@@ -177,7 +177,7 @@ x-axis labels. A quick fix to this is the add the `coord_flip()`
 function to the end of our plot code.
 
 
-```r
+``` r
 ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
   geom_col() +
   coord_flip()
@@ -213,7 +213,7 @@ First we create a new object with
 our filtered data:
 
 
-```r
+``` r
 gapminder_small_2 <- gapminder %>%
                         filter(continent == "Americas",
                                year %in% c(1952, 2007))
@@ -229,7 +229,7 @@ The default behavior for `postion` in `geom_col()`
 is "stack".
 
 
-```r
+``` r
 ggplot(gapminder_small_2, 
        mapping = aes(x = country, y = gdpPercap, 
        fill = as.factor(year))) +
@@ -237,7 +237,7 @@ ggplot(gapminder_small_2,
    coord_flip()
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-gpd-per-cap-1.png" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-gpd-per-cap-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 

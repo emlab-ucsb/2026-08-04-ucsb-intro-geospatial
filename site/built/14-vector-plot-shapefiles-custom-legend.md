@@ -38,7 +38,7 @@ We will continue to work with the three ESRI `shapefile` that we loaded in the
 the raster file we used in previous episodes.
 
 
-```r
+``` r
 library(terra)
 library(ggplot2)
 library(dplyr)
@@ -46,7 +46,7 @@ library(sf)
 ```
 
 
-```r
+``` r
 # Load the data
 aoi_boundary_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
 
@@ -92,7 +92,7 @@ To begin, we will create a plot with the site boundary as the first layer. Then
 layer the tower location and road data on top using `+`.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, fill = "grey", color = "grey") +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
@@ -101,13 +101,13 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-many-shapefiles-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-many-shapefiles-1.png" alt="" style="display: block; margin: auto;" />
 
 Next, let's build a custom legend using the symbology (the colors and symbols)
 that we used to create the plot above. 
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, fill = "grey", color = "grey") +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
@@ -117,7 +117,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-custom-shape-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-custom-shape-1.png" alt="" style="display: block; margin: auto;" />
 
 What if we wanted to have a legend for the tower location (the point)? We can trick 
 R into adding the legend for us, by specifying an aesthetic and value to plot within the 
@@ -141,7 +141,7 @@ actually be colored black.
 
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, fill = "grey", color = "grey") +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
@@ -152,7 +152,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-custom-shape-legend-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-plot-custom-shape-legend-1.png" alt="" style="display: block; margin: auto;" />
 
 
 Now lets adjust the legend titles by passing a `name` to the respective `color`
@@ -162,7 +162,7 @@ want a title for either of those values, we can assign the name to NULL.
 
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, fill = "grey", color = "grey") +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
@@ -175,7 +175,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-create-custom-legend-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-create-custom-legend-1.png" alt="" style="display: block; margin: auto;" />
 
 Finally, it might be better if the points were symbolized as a symbol. We can
 customize this using `shape` parameters in our call to `geom_sf`: 16 is a point
@@ -192,7 +192,7 @@ type `?pch` into the R console.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, fill = "grey", color = "grey") +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
@@ -205,7 +205,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-custom-symbols-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-custom-symbols-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -229,14 +229,14 @@ First we need to read in the data and see how many unique soils are represented
 in the `soilTypeOr` attribute.
 
 
-```r
+``` r
 plot_locations <-
   st_read("data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp")
 ```
 
-```{.output}
+``` output
 Reading layer `PlotLocations_HARV' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 21 features and 25 fields
 Geometry type: POINT
@@ -245,7 +245,7 @@ Bounding box:  xmin: 731405.3 ymin: 4712845 xmax: 732275.3 ymax: 4713846
 Projected CRS: WGS 84 / UTM zone 18N
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp"
@@ -253,21 +253,21 @@ Projected CRS: WGS 84 / UTM zone 18N
 unique(plot_locations$soilTypeOr)
 ```
 
-```{.output}
+``` output
 [1] "Inceptisols" "Histosols"  
 ```
 
 Next we can create a new color palette with one color for each soil type.
 
 
-```r
+``` r
 blue_orange <- c("cornflowerblue", "darkorange")
 ```
 
 Finally, we will create our plot.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
   geom_sf(data = plot_locations, mapping = aes(fill = soilTypeOr),
@@ -280,7 +280,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-harv-plot-locations-bg-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-harv-plot-locations-bg-1.png" alt="" style="display: block; margin: auto;" />
 
 If we want each soil to be shown with a different symbol, we can give multiple
 values to the `scale_shape_manual()` argument. 
@@ -309,7 +309,7 @@ on the plot.
 It's a lot to take in, we know, but it might come in handy for our own research!
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
   geom_sf(data = plot_locations, mapping = aes(fill = soilTypeOr, shape = soilTypeOr)) +
@@ -323,7 +323,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-harv-plot-locations-pch-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-harv-plot-locations-pch-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -349,14 +349,14 @@ Remember for `ggplot` to be able to plot raster data, we first need
 to convert it to a data frame. 
 
 
-```r
+``` r
 CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 ```
 
 Now we can add it to the plot as a `geom_raster()` object: 
 
 
-```r
+``` r
 ggplot() + 
   geom_raster(data = CHM_HARV_df, 
               mapping = aes(x = x, y = y, fill = HARV_chmCrop)) + 
@@ -368,7 +368,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" />
 
 Now we can make a similar plot using `tmap`. 
 
@@ -381,7 +381,7 @@ the following code into your R console:
 Once downloaded, remember to load `tmap` into your environment using: 
 
 
-```r
+``` r
 library(tmap)
 ```
 
@@ -391,7 +391,7 @@ For example, if you wanted to plot a raster first, and then a vector
 layer on top of it, you would write something like this: 
 
 
-```r
+``` r
 tm_shape(raster_object) + # first we specify the object to plot first
   tm_raster() + # then we specify the kind of object it is
   tm_shape(vector_object) + # then we specify the object to plot next
@@ -402,7 +402,7 @@ You can specify things like color and shape within the `tm_sf()` function as
 `col = "black"` or `shape = 8` for example. 
 
 
-```r
+``` r
 # Create the plot
 tm_shape(CHM_HARV) + 
   tm_raster() + 
@@ -414,11 +414,7 @@ tm_shape(CHM_HARV) +
   tm_sf(col = "black") 
 ```
 
-```{.output}
-SpatRaster object downsampled to 898 by 1115 cells.
-```
-
-<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-challenge-vector-raster-overlay-1.png" style="display: block; margin: auto;" />
+<img src="fig/14-vector-plot-shapefiles-custom-legend-rendered-challenge-vector-raster-overlay-1.png" alt="" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints

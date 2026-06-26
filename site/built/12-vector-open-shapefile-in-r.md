@@ -42,7 +42,7 @@ Make sure
 you have the `sf` library loaded along with the other libraries we will need.
 
 
-```r
+``` r
 library(ggplot2)
 library(dplyr)
 library(sf)
@@ -63,14 +63,14 @@ requires the file path to the ESRI `shapefile`.
 Let's import our AOI:
 
 
-```r
+``` r
 aoi_boundary_HARV <- st_read(
   "data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
 ```
 
-```{.output}
+``` output
 Reading layer `HarClip_UTMZ18' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 1 feature and 1 field
 Geometry type: POLYGON
@@ -79,7 +79,7 @@ Bounding box:  xmin: 732128 ymin: 4713209 xmax: 732251.1 ymax: 4713359
 Projected CRS: WGS 84 / UTM zone 18N
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp"
@@ -109,11 +109,11 @@ We can view metadata of a vector layer using the `st_geometry_type()`, `st_crs()
 vector layer:
 
 
-```r
+``` r
 st_geometry_type(aoi_boundary_HARV)
 ```
 
-```{.output}
+``` output
 [1] POLYGON
 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE
 ```
@@ -123,11 +123,11 @@ output list the possible categories of the geometry type. Now let's check what
 CRS this file data is in:
 
 
-```r
+``` r
 st_crs(aoi_boundary_HARV)
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 / UTM zone 18N 
   wkt:
@@ -172,11 +172,11 @@ spatial object's extent values as it specifies units. To find the extent of our 
 can use the `st_bbox()` function:
 
 
-```r
+``` r
 st_bbox(aoi_boundary_HARV)
 ```
 
-```{.output}
+``` output
      xmin      ymin      xmax      ymax 
  732128.0 4713208.7  732251.1 4713359.2 
 ```
@@ -191,11 +191,11 @@ Lastly, we can view all of the metadata and attributes for this R spatial
 object by printing it to the screen:
 
 
-```r
+``` r
 aoi_boundary_HARV
 ```
 
-```{.output}
+``` output
 Simple feature collection with 1 feature and 1 field
 Geometry type: POLYGON
 Dimension:     XY
@@ -216,14 +216,14 @@ for our plot. When plotting `sf` objects with `ggplot2`, you need to use the
 `coord_sf()` coordinate system.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, color = "black", fill = "cyan1") +
   labs(title = "AOI Boundary Plot") +
   coord_sf()
 ```
 
-<img src="fig/12-vector-open-shapefile-in-r-rendered-plot-shapefile-1.png" style="display: block; margin: auto;" />
+<img src="fig/12-vector-open-shapefile-in-r-rendered-plot-shapefile-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -250,13 +250,13 @@ Answer the following questions:
 First we import the data:
 
 
-```r
+``` r
 lines_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
 ```
 
-```{.output}
+``` output
 Reading layer `HARV_roads' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 13 features and 15 fields
 Geometry type: MULTILINESTRING
@@ -265,7 +265,7 @@ Bounding box:  xmin: 730741.2 ymin: 4711942 xmax: 733295.5 ymax: 4714260
 Projected CRS: WGS 84 / UTM zone 18N
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp"
@@ -273,9 +273,9 @@ Projected CRS: WGS 84 / UTM zone 18N
 point_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
 ```
 
-```{.output}
+``` output
 Reading layer `HARVtower_UTM18N' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 1 feature and 14 fields
 Geometry type: POINT
@@ -284,7 +284,7 @@ Bounding box:  xmin: 732183.2 ymin: 4713265 xmax: 732183.2 ymax: 4713265
 Projected CRS: WGS 84 / UTM zone 18N
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp"
@@ -293,11 +293,11 @@ Projected CRS: WGS 84 / UTM zone 18N
 Then we check its geometry type. 
 
 
-```r
+``` r
 st_geometry_type(lines_HARV)
 ```
 
-```{.output}
+``` output
  [1] MULTILINESTRING MULTILINESTRING MULTILINESTRING MULTILINESTRING
  [5] MULTILINESTRING MULTILINESTRING MULTILINESTRING MULTILINESTRING
  [9] MULTILINESTRING MULTILINESTRING MULTILINESTRING MULTILINESTRING
@@ -305,11 +305,11 @@ st_geometry_type(lines_HARV)
 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE
 ```
 
-```r
+``` r
 st_geometry_type(point_HARV)
 ```
 
-```{.output}
+``` output
 [1] POINT
 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE
 ```
@@ -317,11 +317,11 @@ st_geometry_type(point_HARV)
 We also check the CRS and extent of each object:
 
 
-```r
+``` r
 st_crs(lines_HARV)
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 / UTM zone 18N 
   wkt:
@@ -361,20 +361,20 @@ PROJCRS["WGS 84 / UTM zone 18N",
     ID["EPSG",32618]]
 ```
 
-```r
+``` r
 st_bbox(lines_HARV)
 ```
 
-```{.output}
+``` output
      xmin      ymin      xmax      ymax 
  730741.2 4711942.0  733295.5 4714260.0 
 ```
 
-```r
+``` r
 st_crs(point_HARV)
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 / UTM zone 18N 
   wkt:
@@ -414,11 +414,11 @@ PROJCRS["WGS 84 / UTM zone 18N",
     ID["EPSG",32618]]
 ```
 
-```r
+``` r
 st_bbox(point_HARV)
 ```
 
-```{.output}
+``` output
      xmin      ymin      xmax      ymax 
  732183.2 4713265.0  732183.2 4713265.0 
 ```

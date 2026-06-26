@@ -28,7 +28,7 @@ the `project()` function in the `terra` package.
 Let's load the packages we'll need for this lesson: 
 
 
-```r
+``` r
 library(terra)
 library(ggplot2)
 library(dplyr)
@@ -56,7 +56,7 @@ The hillshade layer maps the terrain using light and shadow to create a
 First, we need to import the DTM and DTM hillshade data.
 
 
-```r
+``` r
 DTM_HARV <- 
     rast("data/NEON-DS-Airborne-Remote-Sensing/HARV/DTM/HARV_dtmCrop.tif")
 
@@ -76,7 +76,7 @@ Next, we will convert each of these datasets to a dataframe for
 plotting with `ggplot`.
 
 
-```r
+``` r
 DTM_HARV_df <- as.data.frame(DTM_HARV, xy = TRUE)
 
 DTM_hill_HARV_df <- as.data.frame(DTM_hill_HARV, xy = TRUE)
@@ -87,7 +87,7 @@ Now we can create a map of the DTM layered over the hillshade. Note that we use
 easily create a color ramp for the data we want to display.
 
 
-```r
+``` r
 ggplot() +
      geom_raster(data = DTM_HARV_df , 
                  mapping = aes(x = x, y = y, 
@@ -99,14 +99,14 @@ ggplot() +
      coord_quickmap()
 ```
 
-<img src="fig/11-raster-reproject-in-r-rendered-plot-empty-1.png" style="display: block; margin: auto;" />
+<img src="fig/11-raster-reproject-in-r-rendered-plot-empty-1.png" alt="" style="display: block; margin: auto;" />
 
 Our results are curious - neither the Digital Terrain Model (`DTM_HARV_df`)
 nor the DTM Hillshade (`DTM_hill_HARV_df`) plotted.
 Let's try to plot the DTM on its own to make sure there are data there.
 
 
-```r
+``` r
 ggplot() +
   geom_raster(data = DTM_HARV_df,
       mapping = aes(x = x, y = y, fill = HARV_dtmCrop)) +
@@ -114,14 +114,14 @@ ggplot() +
   coord_quickmap()
 ```
 
-<img src="fig/11-raster-reproject-in-r-rendered-plot-DTM-1.png" style="display: block; margin: auto;" />
+<img src="fig/11-raster-reproject-in-r-rendered-plot-DTM-1.png" alt="" style="display: block; margin: auto;" />
 
 Our DTM seems to contain data and plots just fine.
 
 Next we plot the DTM Hillshade on its own to see whether everything is OK.
 
 
-```r
+``` r
 ggplot() + 
   geom_raster(data = DTM_hill_HARV_df,
               mapping = aes(x = x, y = y,
@@ -129,7 +129,7 @@ ggplot() +
   coord_quickmap()
 ```
 
-<img src="fig/11-raster-reproject-in-r-rendered-plot-DTM-hill-1.png" style="display: block; margin: auto;" />
+<img src="fig/11-raster-reproject-in-r-rendered-plot-DTM-hill-1.png" alt="" style="display: block; margin: auto;" />
 
 If we look at the axes, we can see that the projections of the two rasters are 
 different.
@@ -139,19 +139,19 @@ Reference Systems (CRSs) of the DTM and the hillshade data to see how they
 differ.
 
 
-```r
+``` r
 crs(DTM_HARV, proj = TRUE)
 ```
 
-```{.output}
+``` output
 [1] "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs"
 ```
 
-```r
+``` r
 crs(DTM_hill_HARV, proj = TRUE)
 ```
 
-```{.output}
+``` output
 [1] "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
@@ -203,7 +203,7 @@ not the `data.frame()` we use for plotting with `ggplot`.
 
 
 
-```r
+``` r
 DTM_hill_UTMZ18N_HARV <- project(x = DTM_hill_HARV,
                                  y = DTM_HARV)
 ```
@@ -212,14 +212,14 @@ For plotting with `ggplot()`, we will need to create a dataframe from our newly
 reprojected raster.
 
 
-```r
+``` r
 DTM_hill_HARV_2_df <- as.data.frame(DTM_hill_UTMZ18N_HARV, xy = TRUE)
 ```
 
 We can now create a plot of this data.
 
 
-```r
+``` r
 ggplot() +
      geom_raster(data = DTM_HARV_df , 
                  mapping = aes(x = x, y = y, 
@@ -231,7 +231,7 @@ ggplot() +
      coord_quickmap()
 ```
 
-<img src="fig/11-raster-reproject-in-r-rendered-plot-projected-raster-1.png" style="display: block; margin: auto;" />
+<img src="fig/11-raster-reproject-in-r-rendered-plot-projected-raster-1.png" alt="" style="display: block; margin: auto;" />
 
 We have now successfully draped the Digital Terrain Model on top of our
 hillshade to produce a nice looking, textured map!
@@ -251,7 +251,7 @@ Reproject the data as necessary to make things line up!
 ## Solution
 
 
-```r
+``` r
 # import DSM
 DSM_SJER <- 
     rast("data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_dsmCrop.tif")
@@ -289,7 +289,7 @@ ggplot() +
      coord_quickmap()
 ```
 
-<img src="fig/11-raster-reproject-in-r-rendered-challenge-code-reprojection-1.png" style="display: block; margin: auto;" />
+<img src="fig/11-raster-reproject-in-r-rendered-challenge-code-reprojection-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 

@@ -30,14 +30,14 @@ Let's load our packages and data for this episode:
 
 
 
-```r
+``` r
 library(ggplot2)
 library(dplyr)
 library(sf)
 ```
 
 
-```r
+``` r
 aoi_boundary_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
 
 # If you are getting an error, check your file path: 
@@ -85,7 +85,7 @@ locations at the NEON Harvard Forest Field Site (`HARV_PlotLocations.csv`) and
 look at the structure of that new object:
 
 
-```r
+``` r
 plot_locations_HARV <-
   read.csv("data/NEON-DS-Site-Layout-Files/HARV/HARV_PlotLocations.csv")
 
@@ -96,7 +96,7 @@ plot_locations_HARV <-
 str(plot_locations_HARV)
 ```
 
-```{.output}
+``` output
 'data.frame':	21 obs. of  16 variables:
  $ easting   : num  731405 731934 731754 731724 732125 ...
  $ northing  : num  4713456 4713415 4713115 4713595 4713846 ...
@@ -129,11 +129,11 @@ contain columns labeled:
 Let's check out the column names of our dataframe.
 
 
-```r
+``` r
 names(plot_locations_HARV)
 ```
 
-```{.output}
+``` output
  [1] "easting"    "northing"   "geodeticDa" "utmZone"    "plotID"    
  [6] "stateProvi" "county"     "domainName" "domainID"   "siteID"    
 [11] "plotType"   "subtype"    "plotSize"   "elevation"  "soilTypeOr"
@@ -148,19 +148,19 @@ contain coordinate values. We can confirm this by looking at the first six rows
 of our data.
 
 
-```r
+``` r
 head(plot_locations_HARV$easting)
 ```
 
-```{.output}
+``` output
 [1] 731405.3 731934.3 731754.3 731724.3 732125.3 731634.3
 ```
 
-```r
+``` r
 head(plot_locations_HARV$northing)
 ```
 
-```{.output}
+``` output
 [1] 4713456 4713415 4713115 4713595 4713846 4713295
 ```
 
@@ -180,19 +180,19 @@ Following the `easting` and `northing` columns, there is a `geodeticDa` and a
 `projection`). Let's view those next.
 
 
-```r
+``` r
 head(plot_locations_HARV$geodeticDa)
 ```
 
-```{.output}
+``` output
 [1] "WGS84" "WGS84" "WGS84" "WGS84" "WGS84" "WGS84"
 ```
 
-```r
+``` r
 head(plot_locations_HARV$utmZone)
 ```
 
-```{.output}
+``` output
 [1] "18N" "18N" "18N" "18N" "18N" "18N"
 ```
 
@@ -221,11 +221,11 @@ object and assign it to our new spatial object. We've seen this CRS before with
 our Harvard Forest study site (`point_HARV`).
 
 
-```r
+``` r
 st_crs(point_HARV)
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 / UTM zone 18N 
   wkt:
@@ -273,12 +273,12 @@ Next, let's create a `crs` object that we can use to define the CRS of our `sf`
 object when we create it.
 
 
-```r
+``` r
 utm18nCRS <- st_crs(point_HARV)
 utm18nCRS
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 / UTM zone 18N 
   wkt:
@@ -318,11 +318,11 @@ PROJCRS["WGS 84 / UTM zone 18N",
     ID["EPSG",32618]]
 ```
 
-```r
+``` r
 class(utm18nCRS)
 ```
 
-```{.output}
+``` output
 [1] "crs"
 ```
 
@@ -337,7 +337,7 @@ specify:
 We will use the `st_as_sf()` function to perform the conversion.
 
 
-```r
+``` r
 plot_locations_sp_HARV <- st_as_sf(plot_locations_HARV,
                                    coords = c("easting", "northing"),
                                    crs = utm18nCRS)
@@ -347,11 +347,11 @@ We should double check the CRS to make sure it is correct and matches the
 CRS of `point_HARV`.
 
 
-```r
+``` r
 st_crs(plot_locations_sp_HARV) == st_crs(point_HARV)
 ```
 
-```{.output}
+``` output
 [1] TRUE
 ```
 
@@ -360,14 +360,14 @@ st_crs(plot_locations_sp_HARV) == st_crs(point_HARV)
 We now have a spatial R object, we can plot our newly created spatial object.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = plot_locations_sp_HARV) +
   labs(title = "Map of Plot Locations") + 
   coord_sf()
 ```
 
-<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-data-points-1.png" style="display: block; margin: auto;" />
+<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-data-points-1.png" alt="" style="display: block; margin: auto;" />
 
 ## Plot Extent
 
@@ -378,7 +378,7 @@ R using `ggplot`, all of the layers of the plot are considered in setting the
 boundaries of the plot. To show this, let's plot our `country_boundary_US` object.
 
 
-```r
+``` r
 ggplot() + 
   geom_sf(data = country_boundary_US) + 
   geom_sf(data = plot_locations_sp_HARV) + 
@@ -386,7 +386,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-data-1.png" style="display: block; margin: auto;" />
+<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-data-1.png" alt="" style="display: block; margin: auto;" />
 
 When we plot the two layers together, `ggplot` sets the plot boundaries so that
 they are large enough to include all of the data included in all of the layers.
@@ -418,7 +418,7 @@ If you have extra time, feel free to add roads and other layers to your map!
 First we will read in the new csv file and look at the data structure.
 
 
-```r
+``` r
 newplot_locations_HARV <-
   read.csv("data/NEON-DS-Site-Layout-Files/HARV/HARV_2NewPhenPlots.csv")
 
@@ -429,7 +429,7 @@ newplot_locations_HARV <-
 str(newplot_locations_HARV)
 ```
 
-```{.output}
+``` output
 'data.frame':	2 obs. of  13 variables:
  $ decimalLat: num  42.5 42.5
  $ decimalLon: num  -72.2 -72.2
@@ -452,12 +452,12 @@ can use that data to establish a CRS for this data. First we will extract the
 CRS from the `country_boundary_US` object and confirm that it is WGS84.
 
 
-```r
+``` r
 geogCRS <- st_crs(country_boundary_US)
 geogCRS
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 
   wkt:
@@ -481,7 +481,7 @@ Then we will convert our new data to a spatial dataframe, using the `geogCRS`
 object as our CRS.
 
 
-```r
+``` r
 newPlot.Sp.HARV <- st_as_sf(newplot_locations_HARV,
                             coords = c("decimalLon", "decimalLat"),
                             crs = geogCRS)
@@ -490,11 +490,11 @@ newPlot.Sp.HARV <- st_as_sf(newplot_locations_HARV,
 Next we'll confirm that the CRS for our new object is correct.
 
 
-```r
+``` r
 st_crs(newPlot.Sp.HARV)
 ```
 
-```{.output}
+``` output
 Coordinate Reference System:
   User input: WGS 84 
   wkt:
@@ -521,7 +521,7 @@ the data for us.
 3) Now we can create our plot.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = plot_locations_sp_HARV, color = "orange") +
   geom_sf(data = newPlot.Sp.HARV, color = "lightblue") +
@@ -529,7 +529,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-locations-harv-orange-1.png" style="display: block; margin: auto;" />
+<img src="fig/16-vector-csv-to-shapefile-in-r-rendered-plot-locations-harv-orange-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -549,7 +549,7 @@ in `sf`. To do this we need the following arguments:
 We can now export the spatial object as an ESRI `shapefile`.
 
 
-```r
+``` r
 st_write(obj = plot_locations_sp_HARV,
          dsn = "data/cleaned-data/PlotLocations_HARV.shp", 
          driver = "ESRI Shapefile")

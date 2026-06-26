@@ -33,14 +33,14 @@ We will continue to work with the some of the ESRI `shapefiles` that we loaded i
 previous episodes.
 
 
-```r
+``` r
 library(sf)
 library(ggplot2)
 library(dplyr)
 ```
 
 
-```r
+``` r
 point_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
 
 # If you are getting an error, check your file path: 
@@ -99,14 +99,14 @@ care about the x and y coordinates, not the z or m dimensions, so we will use
 `st_zm()` to drop the coordinates that we do not need.
 
 
-```r
+``` r
 state_boundary_US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp") %>%
   st_zm()
 ```
 
-```{.output}
+``` output
 Reading layer `US-State-Boundaries-Census-2014' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 58 features and 10 fields
 Geometry type: MULTIPOLYGON
@@ -116,7 +116,7 @@ z_range:       zmin: 0 zmax: 0
 Geodetic CRS:  WGS 84
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp"
@@ -125,14 +125,14 @@ Geodetic CRS:  WGS 84
 Next, let's plot the U.S. states data:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = state_boundary_US) +
   labs(title = "Map of Contiguous US State Boundaries") +
   coord_sf()
 ```
 
-<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-find-coordinates-1.png" style="display: block; margin: auto;" />
+<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-find-coordinates-1.png" alt="" style="display: block; margin: auto;" />
 
 ## U.S. Boundary Layer
 
@@ -141,14 +141,14 @@ nicer. We will import
 `NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States`.
 
 
-```r
+``` r
 country_boundary_US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp") %>%
   st_zm()
 ```
 
-```{.output}
+``` output
 Reading layer `US-Boundary-Dissolved-States' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 1 feature and 9 fields
 Geometry type: MULTIPOLYGON
@@ -158,7 +158,7 @@ z_range:       zmin: 0 zmax: 0
 Geodetic CRS:  WGS 84
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp"
@@ -169,7 +169,7 @@ will make our map pop! We will also manually set the colors of the state
 boundaries and country boundaries.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = state_boundary_US, color = "gray60") +
   geom_sf(data = country_boundary_US, color = "black", alpha = 0.25, linewidth = 0.5) +
@@ -177,18 +177,18 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-us-boundaries-thickness-1.png" style="display: block; margin: auto;" />
+<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-us-boundaries-thickness-1.png" alt="" style="display: block; margin: auto;" />
 
 Next, let's add the location of a flux tower where our study area is.
 As we are adding these layers, take note of the CRS of each object.
 First let's look at the CRS of our tower location object:
 
 
-```r
+``` r
 st_crs(point_HARV)$proj4string
 ```
 
-```{.output}
+``` output
 [1] "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs"
 ```
 
@@ -208,19 +208,19 @@ zone.
 Let's check the CRS of our state and country boundary objects:
 
 
-```r
+``` r
 st_crs(state_boundary_US)$proj4string
 ```
 
-```{.output}
+``` output
 [1] "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-```r
+``` r
 st_crs(country_boundary_US)$proj4string
 ```
 
-```{.output}
+``` output
 [1] "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
@@ -259,11 +259,11 @@ object compared to the `state_boundary_US` object.
 First we'll look at the extent for our study site:
 
 
-```r
+``` r
 st_bbox(point_HARV)
 ```
 
-```{.output}
+``` output
      xmin      ymin      xmax      ymax 
  732183.2 4713265.0  732183.2 4713265.0 
 ```
@@ -271,11 +271,11 @@ st_bbox(point_HARV)
 And then the extent for the state boundary data.
 
 
-```r
+``` r
 st_bbox(state_boundary_US)
 ```
 
-```{.output}
+``` output
       xmin       ymin       xmax       ymax 
 -124.72584   24.49813  -66.94989   49.38436 
 ```
@@ -307,7 +307,7 @@ This means we can plot our three data sets together without doing any
 conversion:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = state_boundary_US, color = "gray60") +
   geom_sf(data = country_boundary_US, linewidth = 0.5, alpha = 0.25, color = "black") +
@@ -316,7 +316,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-layer-point-on-states-1.png" style="display: block; margin: auto;" />
+<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-layer-point-on-states-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -337,14 +337,14 @@ Create a map of the North Eastern United States as follows:
 ## Solution
 
 
-```r
+``` r
 NE.States.Boundary.US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp") %>%
   st_zm()
 ```
 
-```{.output}
+``` output
 Reading layer `Boundary-US-State-NEast' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 12 features and 9 fields
 Geometry type: MULTIPOLYGON
@@ -354,7 +354,7 @@ z_range:       zmin: 0 zmax: 0
 Geodetic CRS:  WGS 84
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp"
@@ -371,7 +371,7 @@ ggplot() +
     coord_sf()
 ```
 
-<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-ne-states-harv-1.png" style="display: block; margin: auto;" />
+<img src="fig/15-vector-when-data-dont-line-up-crs-rendered-ne-states-harv-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 

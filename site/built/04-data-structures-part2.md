@@ -41,7 +41,7 @@ examples in this episode.
 :::::::::::::::::::::::::::::::::::::::::  
 
 
-```r
+``` r
 gapminder <- read.csv("data/gapminder_data.csv")
 ```
 
@@ -49,11 +49,11 @@ Let's investigate the `gapminder` data frame a bit; the first thing we should
 always do is check out what the data looks like with `str`:
 
 
-```r
+``` r
 str(gapminder)
 ```
 
-```{.output}
+``` output
 'data.frame':	1704 obs. of  6 variables:
  $ country  : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
@@ -68,7 +68,7 @@ remembering that `str(gapminder)` said there were 1704 observations of 6
 variables in gapminder, what do you think the following will produce, and why?
 
 
-```r
+``` r
 length(gapminder)
 ```
 
@@ -78,30 +78,30 @@ number of rows it has (1704), but this is not the case; it gives us the number o
 To get the number of rows and columns in our dataset, try:
 
 
-```r
+``` r
 nrow(gapminder)
 ```
 
-```{.output}
+``` output
 [1] 1704
 ```
 
-```r
+``` r
 ncol(gapminder)
 ```
 
-```{.output}
+``` output
 [1] 6
 ```
 
 Or, both at once:
 
 
-```r
+``` r
 dim(gapminder)
 ```
 
-```{.output}
+``` output
 [1] 1704    6
 ```
 
@@ -109,11 +109,11 @@ We'll also likely want to know what the titles of all the columns are, so we can
 ask for them later:
 
 
-```r
+``` r
 colnames(gapminder)
 ```
 
-```{.output}
+``` output
 [1] "country"   "year"      "pop"       "continent" "lifeExp"   "gdpPercap"
 ```
 
@@ -128,11 +128,11 @@ Once we're happy that the data types and structures seem reasonable, it's time
 to start digging into our data proper. Check out the first few lines:
 
 
-```r
+``` r
 head(gapminder)
 ```
 
-```{.output}
+``` output
       country year      pop continent lifeExp gdpPercap
 1 Afghanistan 1952  8425333      Asia  28.801  779.4453
 2 Afghanistan 1957  9240934      Asia  30.332  820.8530
@@ -160,7 +160,7 @@ To check the last few lines it's relatively simple as R already has a
 function for this:
 
 
-```r
+``` r
 tail(gapminder)
 tail(gapminder, n = 15)
 ```
@@ -182,7 +182,7 @@ function for this. What about getting a (pseudorandom) sample? R also has a
 function for this.
 
 
-```r
+``` r
 gapminder[sample(nrow(gapminder), 5), ]
 ```
 
@@ -219,63 +219,64 @@ The object `gapminder` is a data frame with columns
 We would like to create a new column to hold information on whether the life expectancy is below the world average life expectancy (70.5) or above:
 
 
-```r
+``` r
 below_average <- gapminder$lifeExp < 70.5
 head(below_average)
 ```
 
-```{.output}
+``` output
 [1] TRUE TRUE TRUE TRUE TRUE TRUE
 ```
 
 We can then add this as a column via:
 
 
-```r
+``` r
 cbind(gapminder, below_average)
 ```
 
 Note that if we tried to add a vector of `below_average` with a different number of entries than the number of rows in the dataframe, it would fail:
 
 
-```r
+``` r
 below_average <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 cbind(gapminder, below_average)
 ```
 
-```{.error}
-Error in data.frame(..., check.names = FALSE): arguments imply differing number of rows: 1704, 5
+``` error
+Error in `data.frame()`:
+! arguments imply differing number of rows: 1704, 5
 ```
 
 Why didn't this work? R wants to see one element in our new column
 for every row in the table:
 
 
-```r
+``` r
 nrow(gapminder)
 ```
 
-```{.output}
+``` output
 [1] 1704
 ```
 
-```r
+``` r
 length(below_average)
 ```
 
-```{.output}
+``` output
 [1] 5
 ```
 
 So for it to work we need either to have `nrow(gapminder)` = `length(below_average)` or `nrow(gapminder)` to be a multiple of `length(below_average)`:
 
 
-```r
+``` r
 below_average <- c(TRUE, TRUE, FALSE)
 head(cbind(gapminder, below_average))
 ```
 
-```{.output}
+``` output
       country year      pop continent lifeExp gdpPercap below_average
 1 Afghanistan 1952  8425333      Asia  28.801  779.4453          TRUE
 2 Afghanistan 1957  9240934      Asia  30.332  820.8530          TRUE
@@ -290,7 +291,7 @@ The sequence `TRUE,TRUE,FALSE` is repeated over all the gapminder rows.
 Let's overwrite the content of gapminder with our new data frame. We can do this in two ways: using `cbind` and overwriting the `gapminder` object, or by identifying and adding a new column. 
 
 
-```r
+``` r
 below_average <- gapminder$lifeExp<70.5
 
 # Option 1 - use cbind and overwrite the object
@@ -303,7 +304,7 @@ gapminder$below_average <- below_average
 Now how about adding rows? The rows of a data frame are lists, so we can add a new row by either specifying a new list, or a new data frame.
 
 
-```r
+``` r
 # Option 1 - create a new list
 new_row <- list(country = 'Norway', 
                 year = 2016, 
@@ -326,7 +327,7 @@ gapminder_norway <- rbind(gapminder, new_row)
 tail(gapminder_norway)
 ```
 
-```{.output}
+``` output
       country year      pop continent lifeExp  gdpPercap below_average
 1700 Zimbabwe 1987  9216418    Africa  62.351   706.1573          TRUE
 1701 Zimbabwe 1992 10704340    Africa  60.377   693.4208          TRUE
@@ -342,12 +343,12 @@ Here is another thing to look out for: in a `factor`, each different value
 represents what is called a `level`. Let's alter our gapminder data so that the "continent" column is a factor. 
 
 
-```r
+``` r
 gapminder$continent <- factor(gapminder$continent)
 head(gapminder$continent)
 ```
 
-```{.output}
+``` output
 [1] Asia Asia Asia Asia Asia Asia
 Levels: Africa Americas Asia Europe Oceania
 ```
@@ -358,21 +359,21 @@ values that match one of the levels. If you add a new value, it will become
 `NA`.
 
 
-```r
+``` r
 levels(gapminder$continent)
 ```
 
-```{.output}
+``` output
 [1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania" 
 ```
 
-```r
+``` r
 levels(gapminder$continent) <- c(levels(gapminder$continent), "Nordic")
 gapminder_norway  <- rbind(gapminder, new_row)
 tail(gapminder_norway)
 ```
 
-```{.output}
+``` output
       country year      pop continent lifeExp  gdpPercap below_average
 1700 Zimbabwe 1987  9216418    Africa  62.351   706.1573          TRUE
 1701 Zimbabwe 1992 10704340    Africa  60.377   693.4208          TRUE
@@ -387,11 +388,11 @@ categories of the factor, but we can subsequently add any word we want to the
 column without babysitting the factor levels:
 
 
-```r
+``` r
 str(gapminder)
 ```
 
-```{.output}
+``` output
 'data.frame':	1704 obs. of  7 variables:
  $ country      : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
  $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
@@ -402,12 +403,12 @@ str(gapminder)
  $ below_average: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 ```
 
-```r
+``` r
 gapminder$continent <- as.character(gapminder$continent)
 str(gapminder)
 ```
 
-```{.output}
+``` output
 'data.frame':	1704 obs. of  7 variables:
  $ country      : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
  $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
@@ -425,12 +426,12 @@ vectors and rows are lists.* We can also glue two data frames together with
 `rbind`:
 
 
-```r
+``` r
 gapminder <- rbind(gapminder, gapminder)
 tail(gapminder, n=3)
 ```
 
-```{.output}
+``` output
       country year      pop continent lifeExp gdpPercap below_average
 3406 Zimbabwe 1997 11404948    Africa  46.809  792.4500          TRUE
 3407 Zimbabwe 2002 11926563    Africa  39.989  672.0386          TRUE
@@ -444,7 +445,7 @@ tail(gapminder, n=3)
 You can create a new data frame right from within R with the following syntax:
 
 
-```r
+``` r
 df <- data.frame(id = c("a", "b", "c"),
                  x = 1:3,
                  y = c(TRUE, TRUE, FALSE))
@@ -465,7 +466,7 @@ time for coffee break?"
 ## Solution
 
 
-```r
+``` r
 df <- data.frame(first = c("Grace"),
                  last = c("Hopper"),
                  lucky_number = c(0))

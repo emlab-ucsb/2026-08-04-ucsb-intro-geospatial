@@ -39,7 +39,7 @@ data - the `terra` package. Make sure that you have all packages
 loaded.
 
 
-```r
+``` r
 library(terra)
 library(ggplot2)
 library(dplyr)
@@ -70,13 +70,13 @@ get to the desired location/file
 :::::::::::::::::::::::::::::::::::::::
 
 
-```r
+``` r
 describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 ```
 
-```{.output}
+``` output
  [1] "Driver: GTiff/GeoTIFF"                                                                                                                                                                                                                                                          
- [2] "Files: data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif"                                                                                                                                                                                                          
+ [2] "Files: /Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif"                                                                                                                                
  [3] "Size is 1697, 1367"                                                                                                                                                                                                                                                             
  [4] "Coordinate System is:"                                                                                                                                                                                                                                                          
  [5] "PROJCRS[\"WGS 84 / UTM zone 18N\","                                                                                                                                                                                                                                             
@@ -113,7 +113,7 @@ describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 [36] "            ORDER[2],"                                                                                                                                                                                                                                                          
 [37] "            LENGTHUNIT[\"metre\",1]],"                                                                                                                                                                                                                                          
 [38] "    USAGE["                                                                                                                                                                                                                                                                     
-[39] "        SCOPE[\"Engineering survey, topographic mapping.\"],"                                                                                                                                                                                                                   
+[39] "        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],"                                                                                                                                                                                                        
 [40] "        AREA[\"Between 78°W and 72°W, northern hemisphere between equator and 84°N, onshore and offshore. Bahamas. Canada - Nunavut; Ontario; Quebec. Colombia. Cuba. Ecuador. Greenland. Haiti. Jamaica. Panama. Turks and Caicos Islands. United States (USA). Venezuela.\"],"
 [41] "        BBOX[0,-78,84,-72]],"                                                                                                                                                                                                                                                   
 [42] "    ID[\"EPSG\",32618]]"                                                                                                                                                                                                                                                        
@@ -142,7 +142,7 @@ describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 [65] "    STATISTICS_STDDEV=17.83169335933"                                                                                                                                                                                                                                           
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif"
@@ -151,7 +151,7 @@ describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 If you wish to store this information in R, you can do the following:
 
 
-```r
+``` r
 HARV_dsmCrop_info <- capture.output(
   describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 )
@@ -186,7 +186,7 @@ we'll use a naming convention of `datatype_HARV`.
 First we will load our raster file into R and view the data structure.
 
 
-```r
+``` r
 DSM_HARV <-
   rast("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 
@@ -197,16 +197,16 @@ DSM_HARV <-
 DSM_HARV
 ```
 
-```{.output}
-class       : SpatRaster 
-dimensions  : 1367, 1697, 1  (nrow, ncol, nlyr)
+``` output
+class       : SpatRaster
+size        : 1367, 1697, 1  (nrow, ncol, nlyr)
 resolution  : 1, 1  (x, y)
 extent      : 731453, 733150, 4712471, 4713838  (xmin, xmax, ymin, ymax)
-coord. ref. : WGS 84 / UTM zone 18N (EPSG:32618) 
-source      : HARV_dsmCrop.tif 
-name        : HARV_dsmCrop 
-min value   :       305.07 
-max value   :       416.07 
+coord. ref. : WGS 84 / UTM zone 18N (EPSG:32618)
+source      : HARV_dsmCrop.tif
+name        : HARV_dsmCrop
+min value   :   305.070007
+max value   :   416.069977
 ```
 
 The information above includes a report of min and max values, but no other data
@@ -214,15 +214,15 @@ range statistics. Similar to other R data structures like vectors and data frame
 columns, descriptive statistics for raster data can be retrieved like
 
 
-```r
+``` r
 summary(DSM_HARV)
 ```
 
-```{.warning}
+``` warning
 Warning: [summary] used a sample
 ```
 
-```{.output}
+``` output
   HARV_dsmCrop  
  Min.   :305.6  
  1st Qu.:345.6  
@@ -238,11 +238,11 @@ calculate from that instead. To force calculation all the values, you can use
 the function `values`:
 
 
-```r
+``` r
 summary(values(DSM_HARV))
 ```
 
-```{.output}
+``` output
   HARV_dsmCrop  
  Min.   :305.1  
  1st Qu.:345.6  
@@ -257,11 +257,11 @@ by using `ggplot2`. To visualise the data using `terra`, we run this line of
 code: 
 
 
-```r
+``` r
 plot(DSM_HARV)
 ```
 
-<img src="fig/09-raster-structure-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-unnamed-chunk-5-1.png" alt="" style="display: block; margin: auto;" />
 
 To visualise this data in R using `ggplot2`, we need to convert it to a
 dataframe. We learned about dataframes in the Exploring Data Frames lesson.
@@ -270,7 +270,7 @@ Setting `xy = TRUE` maintains the spatial locations of the data, so that we
 can plot the data as a map.
 
 
-```r
+``` r
 DSM_HARV_df <- as.data.frame(DSM_HARV, xy = TRUE)
 ```
 
@@ -278,11 +278,11 @@ Now when we view the structure of our data, we will see a standard
 dataframe format.
 
 
-```r
+``` r
 str(DSM_HARV_df)
 ```
 
-```{.output}
+``` output
 'data.frame':	2319799 obs. of  3 variables:
  $ x           : num  731454 731454 731456 731456 731458 ...
  $ y           : num  4713838 4713838 4713838 4713838 4713838 ...
@@ -297,7 +297,7 @@ are not too close to the poles. Other coordinate systems are available in
 ggplot2 if needed, you can learn about them at their help page `?coord_map`.
 
 
-```r
+``` r
 ggplot() +
     geom_raster(data = DSM_HARV_df , 
                 mapping = aes(x = x, y = y, fill = HARV_dsmCrop)) +
@@ -334,11 +334,11 @@ We can view the CRS string associated with our R object using the`crs()`
 function.
 
 
-```r
+``` r
 crs(DSM_HARV, proj = TRUE)
 ```
 
-```{.output}
+``` output
 [1] "+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs"
 ```
 
@@ -398,29 +398,29 @@ Raster statistics are often calculated and embedded in a GeoTIFF for us. We
 can view these values:
 
 
-```r
+``` r
 minmax(DSM_HARV)
 ```
 
-```{.output}
+``` output
     HARV_dsmCrop
 min       305.07
 max       416.07
 ```
 
-```r
+``` r
 min(values(DSM_HARV))
 ```
 
-```{.output}
+``` output
 [1] 305.07
 ```
 
-```r
+``` r
 max(values(DSM_HARV))
 ```
 
-```{.output}
+``` output
 [1] 416.07
 ```
 
@@ -433,7 +433,7 @@ calculated, we can calculate them using the
 `setMinMax()` function.
 
 
-```r
+``` r
 DSM_HARV <- setMinMax(DSM_HARV)
 ```
 
@@ -455,11 +455,11 @@ function to import one single band from a single or multi-band raster. We can
 view the number of bands in a raster using the `nlyr()` function.
 
 
-```r
+``` r
 nlyr(DSM_HARV)
 ```
 
-```{.output}
+``` output
 [1] 1
 ```
 
@@ -481,7 +481,7 @@ airplane which only flew over some part of a defined region.
 In the image below, the pixels that are black have `NoDataValue`s. The camera
 did not collect data in these areas.
 
-<img src="fig/09-raster-structure-rendered-demonstrate-no-data-black-ggplot-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-demonstrate-no-data-black-ggplot-1.png" alt="" style="display: block; margin: auto;" />
 
 In the next image, the black edges have been assigned `NoDataValue`. R doesn't
 render pixels that contain a specified `NoDataValue`. R assigns missing data
@@ -490,7 +490,7 @@ with the `NoDataValue` as `NA`.
 The difference here shows up as ragged edges on the plot, rather than black
 spaces where there is no data.
 
-<img src="fig/09-raster-structure-rendered-demonstrate-no-data-ggplot-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-demonstrate-no-data-ggplot-1.png" alt="" style="display: block; margin: auto;" />
 
 If your raster already has `NA` values set correctly but you aren't sure where 
 they are, you can deliberately plot them in a particular colour. This can be 
@@ -501,7 +501,7 @@ locate that missing data and fill it in.
 To highlight `NA` values in ggplot, alter the `scale_fill_*()` layer to contain 
 a colour instruction for `NA` values, like `scale_fill_viridis_c(na.value = 'deeppink')`
 
-<img src="fig/09-raster-structure-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-unnamed-chunk-9-1.png" alt="" style="display: block; margin: auto;" />
 
 The value that is conventionally used to take note of missing data (the
 `NoDataValue` value) varies by the raster data type. For floating-point rasters,
@@ -536,13 +536,13 @@ file paths.
 ## Solution
 
 
-```r
+``` r
 describe(sources(DSM_HARV))
 ```
 
-```{.output}
+``` output
  [1] "Driver: GTiff/GeoTIFF"                                                                                                                                                                                                                                                          
- [2] "Files: /Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif"                                                                                                                                
+ [2] "Files: /Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif"                                                                                                                                
  [3] "Size is 1697, 1367"                                                                                                                                                                                                                                                             
  [4] "Coordinate System is:"                                                                                                                                                                                                                                                          
  [5] "PROJCRS[\"WGS 84 / UTM zone 18N\","                                                                                                                                                                                                                                             
@@ -579,7 +579,7 @@ describe(sources(DSM_HARV))
 [36] "            ORDER[2],"                                                                                                                                                                                                                                                          
 [37] "            LENGTHUNIT[\"metre\",1]],"                                                                                                                                                                                                                                          
 [38] "    USAGE["                                                                                                                                                                                                                                                                     
-[39] "        SCOPE[\"Engineering survey, topographic mapping.\"],"                                                                                                                                                                                                                   
+[39] "        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],"                                                                                                                                                                                                        
 [40] "        AREA[\"Between 78°W and 72°W, northern hemisphere between equator and 84°N, onshore and offshore. Bahamas. Canada - Nunavut; Ontario; Quebec. Colombia. Cuba. Ecuador. Greenland. Haiti. Jamaica. Panama. Turks and Caicos Islands. United States (USA). Venezuela.\"],"
 [41] "        BBOX[0,-78,84,-72]],"                                                                                                                                                                                                                                                   
 [42] "    ID[\"EPSG\",32618]]"                                                                                                                                                                                                                                                        
@@ -640,7 +640,7 @@ Plotting data with appropriate highlighting can help reveal patterns in bad
 values and may suggest a solution. Below, reclassification is used to highlight
 elevation values over 400m with a contrasting colour.
 
-<img src="fig/09-raster-structure-rendered-demo-bad-data-highlighting-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-demo-bad-data-highlighting-1.png" alt="" style="display: block; margin: auto;" />
 
 ## Create A Histogram of Raster Values
 
@@ -649,16 +649,16 @@ We can explore the distribution of values contained within our raster using the
 useful in identifying outliers and bad data values in our raster data.
 
 
-```r
+``` r
 ggplot() +
     geom_histogram(data = DSM_HARV_df, mapping = aes(x = HARV_dsmCrop))
 ```
 
-```{.output}
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+``` output
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="fig/09-raster-structure-rendered-view-raster-histogram-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-view-raster-histogram-1.png" alt="" style="display: block; margin: auto;" />
 
 Notice that a warning message is thrown when R creates the histogram.
 
@@ -669,14 +669,14 @@ This warning is caused by a default setting in `geom_histogram` enforcing that t
 by using the `bins` value in the `geom_histogram()` function.
 
 
-```r
+``` r
 ggplot() +
     geom_histogram(data = DSM_HARV_df, 
                    mapping = aes(x = HARV_dsmCrop), 
                    bins = 40)
 ```
 
-<img src="fig/09-raster-structure-rendered-view-raster-histogram2-1.png" style="display: block; margin: auto;" />
+<img src="fig/09-raster-structure-rendered-view-raster-histogram2-1.png" alt="" style="display: block; margin: auto;" />
 
 Note that the shape of this histogram looks similar to the previous one that
 was created using the default of 30 bins. The distribution of elevation values
@@ -702,13 +702,13 @@ Notice: this file is a hillshade. We will learn about hillshades in the [Working
 ## Solution
 
 
-```r
+``` r
 describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif")
 ```
 
-```{.output}
+``` output
  [1] "Driver: GTiff/GeoTIFF"                                                                                                                                                                                                                                                          
- [2] "Files: data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif"                                                                                                                                                                                                          
+ [2] "Files: /Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif"                                                                                                                                
  [3] "Size is 1697, 1367"                                                                                                                                                                                                                                                             
  [4] "Coordinate System is:"                                                                                                                                                                                                                                                          
  [5] "PROJCRS[\"WGS 84 / UTM zone 18N\","                                                                                                                                                                                                                                             
@@ -745,7 +745,7 @@ describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif")
 [36] "            ORDER[2],"                                                                                                                                                                                                                                                          
 [37] "            LENGTHUNIT[\"metre\",1]],"                                                                                                                                                                                                                                          
 [38] "    USAGE["                                                                                                                                                                                                                                                                     
-[39] "        SCOPE[\"Engineering survey, topographic mapping.\"],"                                                                                                                                                                                                                   
+[39] "        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],"                                                                                                                                                                                                        
 [40] "        AREA[\"Between 78°W and 72°W, northern hemisphere between equator and 84°N, onshore and offshore. Bahamas. Canada - Nunavut; Ontario; Quebec. Colombia. Cuba. Ecuador. Greenland. Haiti. Jamaica. Panama. Turks and Caicos Islands. United States (USA). Venezuela.\"],"
 [41] "        BBOX[0,-78,84,-72]],"                                                                                                                                                                                                                                                   
 [42] "    ID[\"EPSG\",32618]]"                                                                                                                                                                                                                                                        
@@ -774,7 +774,7 @@ describe("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif")
 [65] "    STATISTICS_STDDEV=0.48129385401108"                                                                                                                                                                                                                                         
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif"

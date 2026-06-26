@@ -35,14 +35,14 @@ work with the three ESRI `shapefiles` (vector layers) that we loaded in a
 previous episode.
 
 
-```r
+``` r
 library(ggplot2)
 library(dplyr)
 library(sf)
 ```
 
 
-```r
+``` r
 point_HARV <-
     st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
 
@@ -81,11 +81,11 @@ view the object with `View(point_HARV)` or print a summary of the object itself
 to the console. We're going to do this, but with `lines_HARV` today:
 
 
-```r
+``` r
 lines_HARV
 ```
 
-```{.output}
+``` output
 Simple feature collection with 13 features and 15 fields
 Geometry type: MULTILINESTRING
 Dimension:     XY
@@ -143,11 +143,11 @@ with a spatial object too. Note that the geometry is just another column and
 counts towards the total.
 
 
-```r
+``` r
 ncol(lines_HARV)
 ```
 
-```{.output}
+``` output
 [1] 16
 ```
 
@@ -155,11 +155,11 @@ We can view the individual name of each attribute using the `names()` function
 in R:
 
 
-```r
+``` r
 names(lines_HARV)
 ```
 
-```{.output}
+``` output
  [1] "OBJECTID_1" "OBJECTID"   "TYPE"       "NOTES"      "MISCNOTES" 
  [6] "RULEID"     "MAPLABEL"   "SHAPE_LENG" "LABEL"      "BIKEHORSE" 
 [11] "RESVEHICLE" "RECMAP"     "Shape_Le_1" "ResVehic_1" "BicyclesHo"
@@ -170,11 +170,11 @@ We could also view just the first 6 rows of attribute values using the `head()`
 function to get a preview of the data:
 
 
-```r
+``` r
 head(lines_HARV)
 ```
 
-```{.output}
+``` output
 Simple feature collection with 6 features and 15 fields
 Geometry type: MULTILINESTRING
 Dimension:     XY
@@ -232,41 +232,41 @@ spatial objects.
 1) To find the number of attributes, we use the `ncol()` function:
 
 
-```r
+``` r
 ncol(point_HARV)
 ```
 
-```{.output}
+``` output
 [1] 15
 ```
 
-```r
+``` r
 ncol(aoi_boundary_HARV)
 ```
 
-```{.output}
+``` output
 [1] 2
 ```
 
 2) Ownership information is in a column named `Ownership`:
 
 
-```r
+``` r
 point_HARV$Ownership
 ```
 
-```{.output}
+``` output
 [1] "Harvard University, LTER"
 ```
 
 3) To see a list of all of the attributes, we can use the `names()` function:
 
 
-```r
+``` r
 names(point_HARV)
 ```
 
-```{.output}
+``` output
  [1] "Un_ID"      "Domain"     "DomainName" "SiteName"   "Type"      
  [6] "Sub_Type"   "Lat"        "Long"       "Zone"       "Easting"   
 [11] "Northing"   "Ownership"  "County"     "annotation" "geometry"  
@@ -291,11 +291,11 @@ For spatial objects, we can use the same syntax: `objectName$attributeName`.
 We can see the contents of the `TYPE` field of our lines feature:
 
 
-```r
+``` r
 lines_HARV$TYPE
 ```
 
-```{.output}
+``` output
  [1] "woods road" "footpath"   "footpath"   "stone wall" "stone wall"
  [6] "stone wall" "stone wall" "stone wall" "stone wall" "boardwalk" 
 [11] "woods road" "woods road" "woods road"
@@ -305,11 +305,11 @@ To see only unique values within the `TYPE` field, we can use the `unique()`
 function for extracting the possible values of a character variable.
 
 
-```r
+``` r
 unique(lines_HARV$TYPE)
 ```
 
-```{.output}
+``` output
 [1] "woods road" "footpath"   "stone wall" "boardwalk" 
 ```
 
@@ -323,13 +323,13 @@ For example, we might be interested only in features that are of `TYPE`
 so that code only operates on the footpath lines.
 
 
-```r
+``` r
 footpath_HARV <- lines_HARV %>%
   filter(TYPE == "footpath")
 nrow(footpath_HARV)
 ```
 
-```{.output}
+``` output
 [1] 2
 ```
 
@@ -338,7 +338,7 @@ only two feature lines in our spatial object have the attribute
 `TYPE == footpath`. We can plot only the footpath lines:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = footpath_HARV) +
   labs(title = "NEON Harvard Forest Field Site", 
@@ -364,7 +364,7 @@ Note that `linewidth` is placed outside of the `aes()` function, as we are not
 connecting line thickness to a data variable.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = footpath_HARV, 
           mapping = aes(color = factor(OBJECTID)), linewidth = 1.5) +
@@ -394,7 +394,7 @@ Subset out all `boardwalk` from the lines layer and plot it.
 First we will save an object with only the boardwalk lines:
 
 
-```r
+``` r
 boardwalk_HARV <- lines_HARV %>%
   filter(TYPE == "boardwalk")
 ```
@@ -402,18 +402,18 @@ boardwalk_HARV <- lines_HARV %>%
 Let's check how many features there are in this subset:
 
 
-```r
+``` r
 nrow(boardwalk_HARV)
 ```
 
-```{.output}
+``` output
 [1] 1
 ```
 
 Now let's plot that data:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = boardwalk_HARV, linewidth = 1.5) +
   labs(title = "NEON Harvard Forest Field Site", 
@@ -445,20 +445,20 @@ First we will save an object with only the stone wall lines and check the
 number of features:
 
 
-```r
+``` r
 stoneWall_HARV <- lines_HARV %>%
   filter(TYPE == "stone wall")
 nrow(stoneWall_HARV)
 ```
 
-```{.output}
+``` output
 [1] 6
 ```
 
 Now we can plot the data:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = stoneWall_HARV, 
           mapping = aes(color = factor(OBJECTID)), linewidth = 1.5) +
@@ -486,11 +486,11 @@ create a vector of colors - one for each feature.
 First we will check how many unique line types there are:
 
 
-```r
+``` r
 unique(lines_HARV$TYPE)
 ```
 
-```{.output}
+``` output
 [1] "woods road" "footpath"   "stone wall" "boardwalk" 
 ```
 
@@ -498,14 +498,14 @@ Then we can create a palette of four colors, one for each
 feature in our vector object.
 
 
-```r
+``` r
 road_colors <- c("blue", "green", "navy", "purple")
 ```
 
 We can tell `ggplot` to use these colors when we plot the data.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, mapping = aes(color = TYPE)) +
   scale_color_manual(values = road_colors) +
@@ -530,7 +530,7 @@ road types. You can specify which colors to use for which road type by creating
 a named vector: 
 
 
-```r
+``` r
 road_colors <- c("stone wall" = "blue", "boardwalk" = "green",
                  "footpath" = "navy", "woods road" = "purple")
 ```
@@ -549,14 +549,14 @@ We already know that we have four different `TYPE`s in the lines\_HARV object,
 so we will set four different line widths.
 
 
-```r
+``` r
 line_widths <- c(1, 2, 3, 4)
 ```
 
 We can use those line widths when we plot the data.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, 
           mapping = aes(color = TYPE, linewidth = TYPE)) +
@@ -598,11 +598,11 @@ First we need to look at the levels of our factor to see
 what order the road types are in:
 
 
-```r
+``` r
 unique(lines_HARV$TYPE)
 ```
 
-```{.output}
+``` output
 [1] "woods road" "footpath"   "stone wall" "boardwalk" 
 ```
 
@@ -610,7 +610,7 @@ We then can create our `line_width` vector setting each of the
 levels to the desired thickness.
 
 
-```r
+``` r
 line_width <- c("woods road" = 6, "footpath" = 3, 
                 "stone wall" = 2, "boardwalk" = 1)
 ```
@@ -618,7 +618,7 @@ line_width <- c("woods road" = 6, "footpath" = 3,
 Now we can create our plot.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, mapping = aes(linewidth = TYPE)) +
   scale_linewidth_manual(values = line_width) +
@@ -658,7 +658,7 @@ that we created above to color the legend. We'll also move the legend
 to the bottom by specifying `theme(legend.position = "bottom")`.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, 
           mapping = aes(color = TYPE), linewidth = 1.5) +
@@ -693,7 +693,7 @@ for the text, etc.
 
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, 
           mapping = aes(color = TYPE), linewidth = 1.5) +
@@ -720,7 +720,7 @@ So our new line would be:
 
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV, 
           mapping = aes(color = TYPE), linewidth = 1.5) +
@@ -775,13 +775,13 @@ First we explore the `BicyclesHo` attribute to learn the values that correspond
 to the roads we need.
 
 
-```r
+``` r
 lines_HARV %>%
   pull(BicyclesHo) %>%
   unique()
 ```
 
-```{.output}
+``` output
 [1] "Bicycles and Horses Allowed"     NA                               
 [3] "DO NOT SHOW ON REC MAP"          "Bicycles and Horses NOT ALLOWED"
 ```
@@ -790,7 +790,7 @@ Now, we can create a data frame with only those roads where bicycles and horses
 are allowed.
 
 
-```r
+``` r
 lines_showHarv <-
   lines_HARV %>%
   filter(BicyclesHo == "Bicycles and Horses Allowed")
@@ -800,7 +800,7 @@ Finally, we plot the needed roads after setting them to magenta and a thicker
 line width.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = lines_HARV) +
   geom_sf(data = lines_showHarv, 
@@ -841,16 +841,16 @@ First we read in the data and check how many levels there are in the `region`
 column:
 
 
-```r
+``` r
 state_boundary_US <-
 st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp") %>%
 # NOTE: We need neither Z nor M coordinates!
 st_zm()
 ```
 
-```{.output}
+``` output
 Reading layer `US-State-Boundaries-Census-2014' from data source 
-  `/Users/echelleburns/Documents/2024-07-01-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp' 
+  `/Users/echelleburns/Documents/2026-08-04-ucsb-intro-geospatial/site/built/data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 58 features and 10 fields
 Geometry type: MULTIPOLYGON
@@ -860,7 +860,7 @@ z_range:       zmin: 0 zmax: 0
 Geodetic CRS:  WGS 84
 ```
 
-```r
+``` r
 # If you are getting an error, check your file path: 
 # You might need change your file path to: 
 # "data/2009586/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp"
@@ -869,21 +869,21 @@ state_boundary_US$region <- as.factor(state_boundary_US$region)
 levels(state_boundary_US$region)
 ```
 
-```{.output}
+``` output
 [1] "Midwest"   "Northeast" "Southeast" "Southwest" "West"     
 ```
 
 Next we set a color vector with that many items:
 
 
-```r
+``` r
 colors <- c("purple", "springgreen", "yellow", "brown", "navy")
 ```
 
 Now we can create our plot:
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = state_boundary_US, 
           mapping = aes(color = region), size = 1) +

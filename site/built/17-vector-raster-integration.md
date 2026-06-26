@@ -29,7 +29,7 @@ points.
 Let's start by loading the libraries and data we need for this episode: 
 
 
-```r
+``` r
 library(sf)
 library(terra)
 library(ggplot2)
@@ -37,7 +37,7 @@ library(dplyr)
 ```
 
 
-```r
+``` r
 point_HARV <-
   st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
 
@@ -64,7 +64,7 @@ CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 ```
 
 
-```r
+``` r
 plot_locations_sp_HARV <- st_read("data/cleaned-data/PlotLocations_HARV.shp")
 ```
 
@@ -91,7 +91,7 @@ we have worked with in this workshop:
 
 
 
-<img src="fig/17-vector-raster-integration-rendered-compare-data-extents-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-compare-data-extents-1.png" alt="" style="display: block; margin: auto;" />
 
 Frequent use cases of cropping a raster file include reducing file size and
 creating maps. Sometimes we have a raster file that is much larger than our
@@ -113,7 +113,7 @@ data and overlay where the AOI falls within it. The boundaries of the AOI will
 be colored blue, and we use `fill = NA` to make the area transparent.
 
 
-```r
+``` r
 ggplot() +
   geom_raster(data = CHM_HARV_df, 
               mapping = aes(x = x, y = y, fill = HARV_chmCrop)) +
@@ -123,7 +123,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-crop-by-vector-extent-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-crop-by-vector-extent-1.png" alt="" style="display: block; margin: auto;" />
 
 Now that we have visualized the area of the CHM we want to subset, we can
 perform the cropping operation. We are going to `crop()` function from the
@@ -131,7 +131,7 @@ raster package to create a new object with only the portion of the CHM data
 that falls within the boundaries of the AOI.
 
 
-```r
+``` r
 CHM_HARV_Cropped <- crop(x = CHM_HARV, y = aoi_boundary_HARV)
 ```
 
@@ -143,7 +143,7 @@ encompass all the features contained in this object. The `st_as_sfc()` converts
 these 4 coordinates into a polygon that we can plot:
 
 
-```r
+``` r
 CHM_HARV_Cropped_df <- as.data.frame(CHM_HARV_Cropped, xy = TRUE)
 boundary <- st_as_sfc(st_bbox(CHM_HARV))
 
@@ -157,7 +157,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-show-cropped-area-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-show-cropped-area-1.png" alt="" style="display: block; margin: auto;" />
 
 The plot above shows that the full CHM extent (plotted in green) is much larger
 than the resulting cropped raster. Our new cropped CHM now has the same extent
@@ -165,7 +165,7 @@ as the `aoi_boundary_HARV` object that was used as a crop extent (blue border
 below).
 
 
-```r
+``` r
 ggplot() +
   geom_raster(data = CHM_HARV_Cropped_df,
               mapping = aes(x = x, y = y, fill = HARV_chmCrop)) +
@@ -175,7 +175,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-view-crop-extent-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-view-crop-extent-1.png" alt="" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -190,7 +190,7 @@ ggplot() +
 ## Solution
 
 
-```r
+``` r
 CHM_plots_HARVcrop <- crop(x = CHM_HARV, y = plot_locations_sp_HARV)
 
 CHM_plots_HARVcrop_df <- as.data.frame(CHM_plots_HARVcrop, xy = TRUE)
@@ -204,7 +204,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-challenge-code-crop-raster-points-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-challenge-code-crop-raster-points-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -224,7 +224,7 @@ extent of our (cropped) raster data (dark green).
 
 
 
-<img src="fig/17-vector-raster-integration-rendered-repeat-compare-data-extents-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-repeat-compare-data-extents-1.png" alt="" style="display: block; margin: auto;" />
 
 ## Define an Extent
 
@@ -235,12 +235,12 @@ will provide the `ext()` function our xmin, xmax, ymin, and ymax (in that
 order).
 
 
-```r
+``` r
 new_extent <- ext(732161.2, 732238.7, 4713249, 4713333)
 class(new_extent)
 ```
 
-```{.output}
+``` output
 [1] "SpatExtent"
 attr(,"package")
 [1] "terra"
@@ -261,14 +261,14 @@ Once we have defined our new extent, we can use the `crop()` function to crop
 our raster to this extent object.
 
 
-```r
+``` r
 CHM_HARV_manual_cropped <- crop(x = CHM_HARV, y = new_extent)
 ```
 
 To plot this data using `ggplot()` we need to convert it to a dataframe.
 
 
-```r
+``` r
 CHM_HARV_manual_cropped_df <- as.data.frame(CHM_HARV_manual_cropped, xy = TRUE)
 ```
 
@@ -276,7 +276,7 @@ Now we can plot this cropped data. We will show the AOI boundary on the same
 plot for scale.
 
 
-```r
+``` r
 ggplot() +
   geom_sf(data = aoi_boundary_HARV, color = "blue", fill = NA) +
   geom_raster(data = CHM_HARV_manual_cropped_df,
@@ -286,7 +286,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-show-manual-crop-area-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-show-manual-crop-area-1.png" alt="" style="display: block; margin: auto;" />
 
 ## Extract Raster Pixels Values Using Vector Polygons
 
@@ -312,13 +312,13 @@ We will begin by extracting all canopy height pixel values located within our
 Harvard Forest field site.
 
 
-```r
+``` r
 tree_height <- extract(x = CHM_HARV, y = aoi_boundary_HARV, raw = FALSE)
 
 str(tree_height)
 ```
 
-```{.output}
+``` output
 'data.frame':	18450 obs. of  2 variables:
  $ ID          : num  1 1 1 1 1 1 1 1 1 1 ...
  $ HARV_chmCrop: num  21.2 23.9 23.8 22.4 23.9 ...
@@ -335,7 +335,7 @@ use the column `HARV_chmCrop` from our data frame as our x values, as this
 column represents the tree heights for each pixel.
 
 
-```r
+``` r
 ggplot() +
   geom_histogram(data = tree_height, mapping = aes(x = HARV_chmCrop)) +
   labs(title = "Histogram of CHM Height Values (m)", 
@@ -343,22 +343,22 @@ ggplot() +
        y = "Frequency of Pixels")
 ```
 
-```{.output}
-`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+``` output
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-view-extract-histogram-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-view-extract-histogram-1.png" alt="" style="display: block; margin: auto;" />
 
 We can also use the `summary()` function to view descriptive statistics
 including min, max, and mean height values. These values help us better
 understand vegetation at our field site.
 
 
-```r
+``` r
 summary(tree_height$HARV_chmCrop)
 ```
 
-```{.output}
+``` output
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    2.03   21.36   22.81   22.43   23.97   38.17 
 ```
@@ -370,14 +370,14 @@ of summary statistic we are interested in using the `fun =` argument. Let's
 extract a mean height value for our AOI.
 
 
-```r
+``` r
 mean_tree_height_AOI <- extract(x = CHM_HARV, y = aoi_boundary_HARV,
                                 fun = mean)
 
 mean_tree_height_AOI
 ```
 
-```{.output}
+``` output
   ID HARV_chmCrop
 1  1     22.43018
 ```
@@ -402,7 +402,7 @@ Let's put this into practice by figuring out the mean tree height in the 20m
 around the tower location (`point_HARV`).
 
 
-```r
+``` r
 mean_tree_height_tower <- extract(x = CHM_HARV,
                                   y = st_buffer(point_HARV, dist = 20),
                                   fun = mean)
@@ -410,7 +410,7 @@ mean_tree_height_tower <- extract(x = CHM_HARV,
 mean_tree_height_tower
 ```
 
-```{.output}
+``` output
   ID HARV_chmCrop
 1  1     22.38806
 ```
@@ -431,7 +431,7 @@ mean_tree_height_tower
 ## Solution
 
 
-```r
+``` r
 # extract data at each plot location
 mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
                                        y = st_buffer(plot_locations_sp_HARV,
@@ -442,7 +442,7 @@ mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
 mean_tree_height_plots_HARV
 ```
 
-```{.output}
+``` output
    ID HARV_chmCrop
 1   1          NaN
 2   2     23.96756
@@ -467,7 +467,7 @@ mean_tree_height_plots_HARV
 21 21     20.44984
 ```
 
-```r
+``` r
 # plot data
 ggplot(data = mean_tree_height_plots_HARV,
        mapping = aes(x = ID, y = HARV_chmCrop)) +
@@ -477,12 +477,12 @@ ggplot(data = mean_tree_height_plots_HARV,
        y = "Tree Height (m)")
 ```
 
-```{.warning}
+``` warning
 Warning: Removed 1 row containing missing values or values outside the scale range
 (`geom_col()`).
 ```
 
-<img src="fig/17-vector-raster-integration-rendered-hist-tree-height-veg-plot-1.png" style="display: block; margin: auto;" />
+<img src="fig/17-vector-raster-integration-rendered-hist-tree-height-veg-plot-1.png" alt="" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 

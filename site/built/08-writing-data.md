@@ -27,7 +27,7 @@ for the code in this episode to work.
 
 First, let's load in all relevant libraries and data to be used in this lesson: 
 
-```r
+``` r
 library(ggplot2)
 library(dplyr)
 
@@ -39,7 +39,7 @@ and a `figures` folder within the main project folder.
 We can do this manually or using code: 
 
 
-```r
+``` r
 dir.create("data/cleaned-data")
 dir.create("figures")
 ```
@@ -59,7 +59,7 @@ latest plot by default. You can control the size and resolution using the
 arguments to this function.
 
 
-```r
+``` r
 ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +
   geom_histogram()
 ggsave("figures/Distribution-of-gdpPercap.pdf", width=12, height=4)
@@ -81,7 +81,7 @@ in countries in the Americas in the years 1952 and 2007.
 ## Solution
 
 
-```r
+``` r
 gapminder_small <- gapminder %>% 
   filter(continent == "Americas" & year %in% c(1952, 2007))
 
@@ -114,7 +114,7 @@ Let's create a data-cleaning script, for this analysis, we
 only want to focus on the gapminder data for Australia:
 
 
-```r
+``` r
 aust_subset <- gapminder %>% 
   filter(country == "Australia")
 
@@ -136,7 +136,7 @@ Let's look at the help file to work out how to change this
 behaviour.
 
 
-```r
+``` r
 ?write.csv
 ```
 
@@ -145,7 +145,7 @@ column names when writing data to a file.
 To over write this behavior, we can do the following:
 
 
-```r
+``` r
 write.csv(
   aust_subset,
   file="data/cleaned-data/gapminder-aus.csv",
@@ -166,7 +166,7 @@ in the `cleaned-data/` directory.
 ## Solution
 
 
-```r
+``` r
 gapminder_after_1990 <- gapminder %>% 
   filter(year > 1990)
 

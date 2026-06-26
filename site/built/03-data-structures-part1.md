@@ -35,7 +35,7 @@ New file > R script.
 We can add a comment to our script to remind us what we're working on: 
 
 
-```r
+``` r
 # R script for data structures
 ```
 
@@ -48,7 +48,7 @@ downloading and reading in a file `nordic-data.csv`. We will
 save this data as an object named `nordic`:
 
 
-```r
+``` r
 nordic <- read.csv("data/nordic-data.csv")
 ```
 
@@ -87,42 +87,43 @@ We can begin exploring our dataset right away, pulling out columns by specifying
 them using the `$` operator:
 
 
-```r
+``` r
 nordic$country
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
-```r
+``` r
 nordic$lifeExp
 ```
 
-```{.output}
+``` output
 [1] 77.2 80.0 79.0
 ```
 
 We can do other operations on the columns. For example, if we discovered that the life expectancy is two years higher:
 
 
-```r
+``` r
 nordic$lifeExp + 2
 ```
 
-```{.output}
+``` output
 [1] 79.2 82.0 81.0
 ```
 
 But what about:
 
 
-```r
+``` r
 nordic$lifeExp + nordic$country
 ```
 
-```{.error}
-Error in nordic$lifeExp + nordic$country: non-numeric argument to binary operator
+``` error
+Error in `nordic$lifeExp + nordic$country`:
+! non-numeric argument to binary operator
 ```
 
 Understanding what happened here is key to successfully analyzing data in R.
@@ -144,11 +145,11 @@ important concept in programming called *data classes*. We can ask what class of
 data something is:
 
 
-```r
+``` r
 class(nordic$lifeExp)
 ```
 
-```{.output}
+``` output
 [1] "numeric"
 ```
 
@@ -172,12 +173,12 @@ Load the new nordic data as `nordic_2`, and check what class of data we find in 
 `lifeExp` column:
 
 
-```r
+``` r
 nordic_2 <- read.csv("data/nordic-data-2.csv")
 class(nordic_2$lifeExp)
 ```
 
-```{.output}
+``` output
 [1] "character"
 ```
 
@@ -185,12 +186,13 @@ Oh no, our life expectancy lifeExp aren't the numeric type anymore! If we try to
 we did on them before, we run into trouble:
 
 
-```r
+``` r
 nordic_2$lifeExp + 2
 ```
 
-```{.error}
-Error in nordic_2$lifeExp + 2: non-numeric argument to binary operator
+``` error
+Error in `nordic_2$lifeExp + 2`:
+! non-numeric argument to binary operator
 ```
 
 What happened? When R reads a csv file into one of these tables, it insists that
@@ -221,48 +223,48 @@ an empty vector of whatever type you like.
 You can specify a vector either using the `vector()` function or the combine (`c()`) function. 
 
 
-```r
+``` r
 vector(length = 3) # this creates an empty vector of logical values
 ```
 
-```{.output}
+``` output
 [1] FALSE FALSE FALSE
 ```
 
-```r
+``` r
 c(1, 2, 3) # this creates a vector with numerical values
 ```
 
-```{.output}
+``` output
 [1] 1 2 3
 ```
 
-```r
+``` r
 c("this", "that", "the other") # this creates a vector with character values
 ```
 
-```{.output}
+``` output
 [1] "this"      "that"      "the other"
 ```
 
 
-```r
+``` r
 another_vector <- vector(mode = 'character', length = 3)
 another_vector
 ```
 
-```{.output}
+``` output
 [1] "" "" ""
 ```
 
 You can check if something is a vector using `str` which asks for an object's structure:
 
 
-```r
+``` r
 str(another_vector)
 ```
 
-```{.output}
+``` output
  chr [1:3] "" "" ""
 ```
 
@@ -273,11 +275,11 @@ case `[1:3]`; and a few examples of what's actually in the vector - in this case
 empty character strings. If we similarly do
 
 
-```r
+``` r
 str(nordic$lifeExp)
 ```
 
-```{.output}
+``` output
  num [1:3] 77.2 80 79
 ```
 
@@ -312,7 +314,7 @@ our lives easier in R.
 Given what we've learned so far, what do you think the following will produce?
 
 
-```r
+``` r
 quiz_vector <- c(2, 6, '3')
 ```
 
@@ -323,12 +325,12 @@ be combined into a single vector, it will force them all to be the same
 type. Consider:
 
 
-```r
+``` r
 coercion_vector <- c('a', TRUE)
 coercion_vector
 ```
 
-```{.output}
+``` output
 [1] "a"    "TRUE"
 ```
 
@@ -337,21 +339,21 @@ The coercion rules go: `logical` -> `integer` -> `numeric` -> `complex` ->
 force coercion against this flow using the `as.` functions:
 
 
-```r
+``` r
 character_vector_example <- c('0', '2', '4')
 character_vector_example
 ```
 
-```{.output}
+``` output
 [1] "0" "2" "4"
 ```
 
-```r
+``` r
 character_coerced_to_numeric <- as.numeric(character_vector_example)
 character_coerced_to_numeric
 ```
 
-```{.output}
+``` output
 [1] 0 2 4
 ```
 
@@ -374,19 +376,19 @@ these columns different classes?
 ## Solution
 
 
-```r
+``` r
 str(nordic_2$lifeExp)
 ```
 
-```{.output}
+``` output
  chr [1:3] "77.2" "80" "79.0 or 83"
 ```
 
-```r
+``` r
 str(nordic$lifeExp)
 ```
 
-```{.output}
+``` output
  num [1:3] 77.2 80 79
 ```
 
@@ -401,41 +403,41 @@ data point.
 The combine function, `c()`, will also append things to an existing vector:
 
 
-```r
+``` r
 ab_vector <- c('a', 'b')
 ab_vector
 ```
 
-```{.output}
+``` output
 [1] "a" "b"
 ```
 
-```r
+``` r
 combine_example <- c(ab_vector, 'DC')
 combine_example
 ```
 
-```{.output}
+``` output
 [1] "a"  "b"  "DC"
 ```
 
 You can also make series of numbers:
 
 
-```r
+``` r
 my_series <- 1:10
 my_series
 ```
 
-```{.output}
+``` output
  [1]  1  2  3  4  5  6  7  8  9 10
 ```
 
-```r
+``` r
 seq(from = 1, to = 10, by = 0.1)
 ```
 
-```{.output}
+``` output
  [1]  1.0  1.1  1.2  1.3  1.4  1.5  1.6  1.7  1.8  1.9  2.0  2.1  2.2  2.3  2.4
 [16]  2.5  2.6  2.7  2.8  2.9  3.0  3.1  3.2  3.3  3.4  3.5  3.6  3.7  3.8  3.9
 [31]  4.0  4.1  4.2  4.3  4.4  4.5  4.6  4.7  4.8  4.9  5.0  5.1  5.2  5.3  5.4
@@ -448,58 +450,58 @@ seq(from = 1, to = 10, by = 0.1)
 We can ask a few questions about vectors:
 
 
-```r
+``` r
 sequence_example <- 1:10
 head(sequence_example)
 ```
 
-```{.output}
+``` output
 [1] 1 2 3 4 5 6
 ```
 
-```r
+``` r
 tail(sequence_example)
 ```
 
-```{.output}
+``` output
 [1]  5  6  7  8  9 10
 ```
 
-```r
+``` r
 length(sequence_example)
 ```
 
-```{.output}
+``` output
 [1] 10
 ```
 
-```r
+``` r
 class(sequence_example)
 ```
 
-```{.output}
+``` output
 [1] "integer"
 ```
 
 Finally, you can give names to elements in your vector:
 
 
-```r
+``` r
 my_example <- 5:8
 names(my_example) <- c("a", "b", "c", "d")
 my_example
 ```
 
-```{.output}
+``` output
 a b c d 
 5 6 7 8 
 ```
 
-```r
+``` r
 names(my_example)
 ```
 
-```{.output}
+``` output
 [1] "a" "b" "c" "d"
 ```
 
@@ -516,7 +518,7 @@ names A through Z (hint: there is a built in vector called `LETTERS`)
 ## Solution
 
 
-```r
+``` r
 x <- 1:26
 x <- x * 2
 names(x) <- LETTERS
@@ -531,27 +533,27 @@ names(x) <- LETTERS
 We said that columns in data frames were vectors:
 
 
-```r
+``` r
 str(nordic$lifeExp)
 ```
 
-```{.output}
+``` output
  num [1:3] 77.2 80 79
 ```
 
-```r
+``` r
 str(nordic$year)
 ```
 
-```{.output}
+``` output
  int [1:3] 2002 2002 2002
 ```
 
-```r
+``` r
 str(nordic$country)
 ```
 
-```{.output}
+``` output
  chr [1:3] "Denmark" "Sweden" "Norway"
 ```
 
@@ -565,24 +567,24 @@ For example, let's make a vector of strings labeling nordic countries for all
 the countries in our study:
 
 
-```r
+``` r
 nordic_countries <- nordic$country
 str(nordic_countries)
 ```
 
-```{.output}
+``` output
  chr [1:3] "Denmark" "Sweden" "Norway"
 ```
 
 We can turn a vector into a factor like so:
 
 
-```r
+``` r
 categories <- factor(nordic_countries)
 str(categories)
 ```
 
-```{.output}
+``` output
  Factor w/ 3 levels "Denmark","Norway",..: 1 3 2
 ```
 
@@ -630,12 +632,12 @@ Converting character vectors to factors can be done using the `factor()`
 function:
 
 
-```r
+``` r
 nordic$country <- factor(nordic$country)
 nordic$country
 ```
 
-```{.output}
+``` output
 [1] Denmark Sweden  Norway 
 Levels: Denmark Norway Sweden
 ```
@@ -643,24 +645,24 @@ Levels: Denmark Norway Sweden
 You can convert these back to character vectors using `as.character()`:
 
 
-```r
+``` r
 nordic$country <- as.character(nordic$country)
 nordic$country
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
 You can convert numeric vectors to factors in the exact same way:
 
 
-```r
+``` r
 nordic$lifeExp <- factor(nordic$lifeExp)
 nordic$lifeExp
 ```
 
-```{.output}
+``` output
 [1] 77.2 80   79  
 Levels: 77.2 79 80
 ```
@@ -668,11 +670,11 @@ Levels: 77.2 79 80
 But be careful -- you can't use `as.numeric()` to convert factors to numerics!
 
 
-```r
+``` r
 as.numeric(nordic$lifeExp)
 ```
 
-```{.output}
+``` output
 [1] 1 3 2
 ```
 
@@ -681,13 +683,13 @@ talked about. To go from a factor to a number, you need to first turn the factor
 into a character vector, and _then_ turn that into a numeric vector:
 
 
-```r
+``` r
 nordic$lifeExp <- as.character(nordic$lifeExp)
 nordic$lifeExp <- as.numeric(nordic$lifeExp)
 nordic$lifeExp
 ```
 
-```{.output}
+``` output
 [1] 77.2 80.0 79.0
 ```
 
@@ -704,13 +706,13 @@ levels are. This is assumed to be the first factor, but by default factors are
 labeled in alphabetical order. You can change this by specifying the levels:
 
 
-```r
+``` r
 mydata <- c("case", "control", "control", "case")
 factor_ordering_example <- factor(mydata, levels = c("control", "case"))
 str(factor_ordering_example)
 ```
 
-```{.output}
+``` output
  Factor w/ 2 levels "control","case": 2 1 1 2
 ```
 
@@ -725,12 +727,12 @@ is simpler in some ways than the other types, because you can put anything you
 want in it:
 
 
-```r
+``` r
 list_example <- list(1, "a", TRUE, c(2, 6, 7))
 list_example
 ```
 
-```{.output}
+``` output
 [[1]]
 [1] 1
 
@@ -744,12 +746,12 @@ list_example
 [1] 2 6 7
 ```
 
-```r
+``` r
 another_list <- list(title = "Numbers", numbers = 1:10, data = TRUE )
 another_list
 ```
 
-```{.output}
+``` output
 $title
 [1] "Numbers"
 
@@ -763,22 +765,22 @@ $data
 We can now understand something a bit surprising in our data frame; what happens if we compare `str(nordic)` and `str(another_list)`:
 
 
-```r
+``` r
 str(nordic)
 ```
 
-```{.output}
+``` output
 'data.frame':	3 obs. of  3 variables:
  $ country: chr  "Denmark" "Sweden" "Norway"
  $ year   : int  2002 2002 2002
  $ lifeExp: num  77.2 80 79
 ```
 
-```r
+``` r
 str(another_list)
 ```
 
-```{.output}
+``` output
 List of 3
  $ title  : chr "Numbers"
  $ numbers: int [1:10] 1 2 3 4 5 6 7 8 9 10
@@ -792,30 +794,30 @@ In our `nordic` example, we have a character, an integer, and a numerical variab
 we have seen already, each column of data frame is a vector.
 
 
-```r
+``` r
 nordic$country
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
 We can also call to the contents within the items in a list via indexing. For example, if we wanted to just return the contents from the first object in `another_list` (the title), we can do that by using double brackets and specifying either the index value of the item, or it's name. 
 
 
-```r
+``` r
 another_list[[1]]
 ```
 
-```{.output}
+``` output
 [1] "Numbers"
 ```
 
-```r
+``` r
 another_list[["title"]]
 ```
 
-```{.output}
+``` output
 [1] "Numbers"
 ```
 
@@ -843,11 +845,11 @@ Try out these examples and explain what is returned by each one.
 ## Solution
 
 
-```r
+``` r
 nordic[1]
 ```
 
-```{.output}
+``` output
   country
 1 Denmark
 2  Sweden
@@ -859,11 +861,11 @@ returns the first slice of the list, as another list. In this case it is the
 first column of the data frame.
 
 
-```r
+``` r
 nordic[[1]]
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
@@ -871,11 +873,11 @@ The double brace `[[1]]` returns the contents of the list item. In this case
 it is the contents of the first column, a *vector* of type *character*.
 
 
-```r
+``` r
 nordic$country
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
@@ -883,11 +885,11 @@ This example uses the `$` character to address items by name. *country* is the
 first column of the data frame, again a *vector* of type *character*.
 
 
-```r
+``` r
 nordic["country"]
 ```
 
-```{.output}
+``` output
   country
 1 Denmark
 2  Sweden
@@ -898,11 +900,11 @@ Here we are using a single brace `["country"]` replacing the index number
 with the column name. Like example 1, the returned object is a *list*.
 
 
-```r
+``` r
 nordic[1, 1]
 ```
 
-```{.output}
+``` output
 [1] "Denmark"
 ```
 
@@ -911,11 +913,11 @@ coordinates. The returned object is the value in row 1, column 1. The object
 is an *character*: the first value of the first vector in our `nordic` object.
 
 
-```r
+``` r
 nordic[, 1]
 ```
 
-```{.output}
+``` output
 [1] "Denmark" "Sweden"  "Norway" 
 ```
 
@@ -924,11 +926,11 @@ coordinates. The row coordinate is not specified, R interprets this missing
 value as all the elements in this *column* *vector*.
 
 
-```r
+``` r
 nordic[1, ]
 ```
 
-```{.output}
+``` output
   country year lifeExp
 1 Denmark 2002    77.2
 ```
