@@ -1,6 +1,6 @@
-## 2024-07-01-ucsb-intro-geospatial
+## 2026-08-04-ucsb-intro-geospatial
 
-    This is the lesson repository for 2024-07-01-ucsb-intro-geospatial
+    This is the lesson repository for 2026-08-04-ucsb-intro-geospatial
 
 ## Instructions for changing webpages
 
