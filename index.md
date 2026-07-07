@@ -29,7 +29,7 @@ Week 8 | 2026-09-22| [Create Publication-quality Graphics](18-plot-time-series-r
 
 Date | Class Type | Topics Covered
 ---|---|---
-2026-08-06 | R Lecture | Presentation by Dr. Arthur Barazza
+2026-08-06 | R Lecture | Presentation by Dr. Arthur Barraza
 2026-08-13 | Office hours | Bring any-R-thing you need help troubleshooting
 2026-08-20 | R Lecture | Presentation by TBD
 2026-08-27 | Office hours | Bring any-R-thing you need help troubleshooting
