@@ -93,7 +93,7 @@ nordic$lifeExp
 We can do other operations on the columns. For example, if we discovered that the life expectancy is two years higher:
 
 ```{r}
-nordic$lifeExp + 2 * 100
+nordic$lifeExp + 2
 ```
 
 But what about:
