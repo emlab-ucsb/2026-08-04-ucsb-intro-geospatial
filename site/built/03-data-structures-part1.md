@@ -107,11 +107,11 @@ We can do other operations on the columns. For example, if we discovered that th
 
 
 ``` r
-nordic$lifeExp + 2
+nordic$lifeExp + 2 * 100
 ```
 
 ``` output
-[1] 79.2 82.0 81.0
+[1] 277.2 280.0 279.0
 ```
 
 But what about:
