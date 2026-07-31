@@ -29,13 +29,13 @@ Week 8 | 2026-09-22| [Create Publication-quality Graphics](18-plot-time-series-r
 
 Date | Class Type | Topics Covered
 ---|---|---
-2026-08-06 | R Lecture | Presentation by Dr. Arthur Barraza
+2026-08-06 | Office hours | Bring any-R-thing you need help troubleshooting
 2026-08-13 | Office hours | Bring any-R-thing you need help troubleshooting
 2026-08-20 | R Lecture | Presentation by TBD
 2026-08-27 | Office hours | Bring any-R-thing you need help troubleshooting
-2026-09-03 | R Lecture | Presentation by TBD
+2026-09-03 | R Lecture | Presentation by Dr. Cory Berger
 2026-09-10 | Office hours | Bring any-R-thing you need help troubleshooting
-2026-09-17 | R Lecture | Presentation by TBD
+2026-09-17 | R Lecture | Presentation by Jasmine Nyce
 2026-09-24 | Office hours | Bring any-R-thing you need help troubleshooting
 
 ## Instructors and Helpers
@@ -46,6 +46,11 @@ We also have a great group of instructors and helpers for this workshop:
 - [Danielle Ferraro](https://emlab.ucsb.edu/about/our-team/danielle-ferraro) (she/her), Project Scientist at Environmental Markets Lab at University of California, Santa Barbara
 - [Jason Flower](https://emlab.ucsb.edu/about/our-team/jason-flower) (he/him), Senior Project Scientist at Environmental Markets Lab at University of California, Santa Barbara
 - [Lennon Thomas](https://emlab.ucsb.edu/index.php/about/our-team/lennon-thomas) (she/her), Senior Project Scientist at Environmental Markets Lab at University of California, Santa Barbara
+- [Dr. Cory Berger](https://labs.eemb.ucsb.edu/oakley/todd/members/berger), Postdoctoral Researcher in the Oakley Lab at University of California, Santa Barbara
+- [Kaiju Morquecho](https://bren.ucsb.edu/people/kaiju-morquecho) (they/them), Recent Master of Environmental Data Science Grad at University of California, Santa Barbara
+- [Jose Niño Muriel](https://www.library.ucsb.edu/staff/jose-nino-muriel) (he/him), Data Science Community Lead at the DREAM Lab at University of California, Santa Barbara
+- [Jon Jablonski](https://www.library.ucsb.edu/staff/jon-jablonski) (he/him), Director of the DREAM Lab at University of California, Santa Barbara
+
 
 [workbench]: https://carpentries.github.io/sandpaper-docs
 
