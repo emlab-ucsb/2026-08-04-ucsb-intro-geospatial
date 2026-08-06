@@ -23,7 +23,7 @@ source: Rmd
 
 
 
-Let's start by creating a new R script and saving it to the `scripts` folder
+Let's start by creating a new R script and saving it to the `src` folder
 in our project directory. We will create new scripts for each episode in this
 workshop. 
 
