@@ -62,7 +62,7 @@ arguments to this function.
 ``` r
 ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +
   geom_histogram()
-ggsave("figures/Distribution-of-gdpPercap.pdf", width=12, height=4)
+ggsave("figures/Distribution-of-gdpPercap.pdf", width = 12, height = 4)
 ```
 
 Open up this document and have a look.
@@ -82,13 +82,14 @@ in countries in the Americas in the years 1952 and 2007.
 
 
 ``` r
-gapminder_small <- gapminder %>% 
+gapminder_small <- gapminder %>%
   filter(continent == "Americas" & year %in% c(1952, 2007))
 
-ggplot(data = gapminder_small, 
-       mapping = aes(x = country, y = gdpPercap, fill = as.factor(year))) +
-  geom_col(position = "dodge") +
-  coord_flip()
+ggplot(
+  data = gapminder_small,
+  mapping = aes(x = gdpPercap, y = country, fill = as.factor(year))
+) +
+  geom_col(position = "dodge")
 
 # Note that ggsave saves by default the latest plot.
 ggsave("figures/Distribution-of-gdpPercap.pdf", width = 12, height = 4)
@@ -115,12 +116,10 @@ only want to focus on the gapminder data for Australia:
 
 
 ``` r
-aust_subset <- gapminder %>% 
+aust_subset <- gapminder %>%
   filter(country == "Australia")
 
-write.csv(aust_subset,
-  file="data/cleaned-data/gapminder-aus.csv"
-)
+write.csv(aust_subset, file = "data/cleaned-data/gapminder-aus.csv")
 ```
 
 Let's open the file to make sure it contains the data we expect. Navigate to your
@@ -148,8 +147,8 @@ To over write this behavior, we can do the following:
 ``` r
 write.csv(
   aust_subset,
-  file="data/cleaned-data/gapminder-aus.csv",
-  row.names=FALSE
+  file = "data/cleaned-data/gapminder-aus.csv",
+  row.names = FALSE
 )
 ```
 
@@ -167,12 +166,14 @@ in the `cleaned-data/` directory.
 
 
 ``` r
-gapminder_after_1990 <- gapminder %>% 
+gapminder_after_1990 <- gapminder %>%
   filter(year > 1990)
 
-write.csv(gapminder_after_1990,
+write.csv(
+  gapminder_after_1990,
   file = "cleaned-data/gapminder-after-1990.csv",
-  row.names = FALSE)
+  row.names = FALSE
+)
 ```
 
 :::::::::::::::::::::::::

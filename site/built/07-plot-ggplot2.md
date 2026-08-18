@@ -77,7 +77,7 @@ for histograms.
 
 
 ``` r
-ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
   geom_histogram()
 ```
 
@@ -93,7 +93,7 @@ By itself, the call to `ggplot` isn't enough to draw a figure:
 ggplot(data = gapminder, mapping = aes(x = lifeExp))
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-blank-plot-1.png" alt="" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-blank-plot-1.png" style="display: block; margin: auto;" />
 
 We need to tell `ggplot` how we want to visually represent the data, which we
 do by adding a geom layer. In our example, we used `geom_histogram()`, which
@@ -102,7 +102,7 @@ distribution of one variable (in our case "lifeExp"):
 
 
 ``` r
-ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
   geom_histogram()
 ```
 
@@ -129,15 +129,15 @@ expectancy:
 
 
 ``` r
-ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +   
- geom_histogram()
+ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +
+  geom_histogram()
 ```
 
 ``` output
 `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-ch1-sol-1.png" alt="" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-ch1-sol-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -153,7 +153,7 @@ from countries in the Americas.
 
 
 ``` r
-gapminder_small <- gapminder %>% 
+gapminder_small <- gapminder %>%
   filter(year == 2007 & continent == "Americas")
 ```
 
@@ -163,7 +163,7 @@ by default) and gdp per capita on the y-axis.
 
 
 ``` r
-ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
+ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) +
   geom_col()
 ```
 
@@ -173,14 +173,12 @@ ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) +
 </div>
 
 With this many bars plotted, it's impossible to read all of the
-x-axis labels. A quick fix to this is the add the `coord_flip()`
-function to the end of our plot code.
+x-axis labels. We can quickly fix this by switching the axes that each variable is plotted on.
 
 
 ``` r
-ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
-  geom_col() +
-  coord_flip()
+ggplot(data = gapminder_small, mapping = aes(x = gdpPercap, y = country)) +
+  geom_col()
 ```
 
 <div class="figure" style="text-align: center">
@@ -215,8 +213,7 @@ our filtered data:
 
 ``` r
 gapminder_small_2 <- gapminder %>%
-                        filter(continent == "Americas",
-                               year %in% c(1952, 2007))
+  filter(continent == "Americas", year %in% c(1952, 2007))
 ```
 
 Then we plot that data using the `geom_col()`
@@ -230,14 +227,14 @@ is "stack".
 
 
 ``` r
-ggplot(gapminder_small_2, 
-       mapping = aes(x = country, y = gdpPercap, 
-       fill = as.factor(year))) +
-   geom_col(position = "dodge") + 
-   coord_flip()
+ggplot(
+  gapminder_small_2,
+  mapping = aes(x = gdpPercap, y = country, fill = as.factor(year))
+) +
+  geom_col(position = "dodge")
 ```
 
-<img src="fig/07-plot-ggplot2-rendered-gpd-per-cap-1.png" alt="" style="display: block; margin: auto;" />
+<img src="fig/07-plot-ggplot2-rendered-gpd-per-cap-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 

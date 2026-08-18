@@ -418,7 +418,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Writing Data</h1>
-        <p>Last updated on 2026-06-25 |
+        <p>Last updated on 2026-08-18 |
 
         <a href="https://github.com/emlab-ucsb/2026-08-04-ucsb-intro-geospatial/edit/main/episodes/08-writing-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -458,7 +458,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Learners will need to have created the directory structure described
 in <a href="02-project-intro.html">Project Management With RStudio</a>
@@ -505,7 +505,7 @@ resolution using the arguments to this function.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">gapminder</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">gdpPercap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"figures/Distribution-of-gdpPercap.pdf"</span>, width<span class="op">=</span><span class="fl">12</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"figures/Distribution-of-gdpPercap.pdf"</span>, width <span class="op">=</span> <span class="fl">12</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre>
 </div>
 <p>Open up this document and have a look.</p>
 <div id="challenge-1" class="callout challenge">
@@ -526,19 +526,20 @@ per capita in countries in the Americas in the years 1952 and 2007.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gapminder_small</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">gapminder_small</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">continent</span> <span class="op">==</span> <span class="st">"Americas"</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="fl">1952</span>, <span class="fl">2007</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">gapminder_small</span>, </span>
-<span>       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">country</span>, y <span class="op">=</span> <span class="va">gdpPercap</span>, fill <span class="op">=</span> <span class="fu">as.factor</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">gapminder_small</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">gdpPercap</span>, y <span class="op">=</span> <span class="va">country</span>, fill <span class="op">=</span> <span class="fu">as.factor</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Note that ggsave saves by default the latest plot.</span></span>
 <span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"figures/Distribution-of-gdpPercap.pdf"</span>, width <span class="op">=</span> <span class="fl">12</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre>
@@ -560,12 +561,10 @@ to focus on the gapminder data for Australia:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">aust_subset</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">aust_subset</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"Australia"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">write.csv</span><span class="op">(</span><span class="va">aust_subset</span>,</span>
-<span>  file<span class="op">=</span><span class="st">"data/cleaned-data/gapminder-aus.csv"</span></span>
-<span><span class="op">)</span></span></code></pre>
+<span><span class="fu">write.csv</span><span class="op">(</span><span class="va">aust_subset</span>, file <span class="op">=</span> <span class="st">"data/cleaned-data/gapminder-aus.csv"</span><span class="op">)</span></span></code></pre>
 </div>
 <p>Let’s open the file to make sure it contains the data we expect.
 Navigate to your <code>cleaned-data</code> directory and double-click
@@ -593,8 +592,8 @@ following:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">write.csv</span><span class="op">(</span></span>
 <span>  <span class="va">aust_subset</span>,</span>
-<span>  file<span class="op">=</span><span class="st">"data/cleaned-data/gapminder-aus.csv"</span>,</span>
-<span>  row.names<span class="op">=</span><span class="cn">FALSE</span></span>
+<span>  file <span class="op">=</span> <span class="st">"data/cleaned-data/gapminder-aus.csv"</span>,</span>
+<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre>
 </div>
 <div id="challenge-2" class="callout challenge">
@@ -616,18 +615,20 @@ following:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gapminder_after_1990</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">gapminder_after_1990</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;</span> <span class="fl">1990</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">write.csv</span><span class="op">(</span><span class="va">gapminder_after_1990</span>,</span>
+<span><span class="fu">write.csv</span><span class="op">(</span></span>
+<span>  <span class="va">gapminder_after_1990</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"cleaned-data/gapminder-after-1990.csv"</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
+<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -650,7 +651,7 @@ following:</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
 <div class="accordion-body">
 <ul><li>Now that learners know the fundamentals of R, the rest of the
 workshop will apply these concepts to working with geospatial data in
@@ -727,8 +728,8 @@ any links that you are not going to use.
   "url": "https://emlab-ucsb.github.io/2026-08-04-ucsb-intro-geospatial/instructor/08-writing-data.html",
   "identifier": "https://emlab-ucsb.github.io/2026-08-04-ucsb-intro-geospatial/instructor/08-writing-data.html",
   "dateCreated": "2026-07-07",
-  "dateModified": "2026-06-25",
-  "datePublished": "2026-08-06"
+  "dateModified": "2026-08-18",
+  "datePublished": "2026-08-18"
 }
 
   </script><script>

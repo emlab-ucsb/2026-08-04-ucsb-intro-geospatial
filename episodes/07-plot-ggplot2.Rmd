@@ -75,7 +75,7 @@ want to plot the "lifeExp" column of the gapminder data frame on the x-axis. We 
 for histograms.
 
 ```{r lifeExp-vs-gdpPercap-scatter, fig.cap="Histogram of life expectancy by country showing bimodal distribution with modes at 45 and 75", message=FALSE}
-ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
   geom_histogram()
 ```
 
@@ -91,7 +91,7 @@ tells `ggplot` we want to visually represent the
 distribution of one variable (in our case "lifeExp"):
 
 ```{r lifeExp-vs-gdpPercap-scatter2, fig.cap="Histogram of life expectancy by country showing bimodal distribution with modes at 45 and 75"}
-ggplot(data = gapminder, mapping = aes(x = lifeExp)) +   
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
   geom_histogram()
 ```
 
@@ -108,8 +108,8 @@ expectancy:
 ## Solution
 
 ```{r ch1-sol}
-ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +   
- geom_histogram()
+ggplot(data = gapminder, mapping = aes(x = gdpPercap)) +
+  geom_histogram()
 ```
 
 :::::::::::::::::::::::::
@@ -125,7 +125,7 @@ recent year and only
 from countries in the Americas.
 
 ```{r}
-gapminder_small <- gapminder %>% 
+gapminder_small <- gapminder %>%
   filter(year == 2007 & continent == "Americas")
 ```
 
@@ -134,18 +134,16 @@ We will plot countries on the x-axis (listed in alphabetic order
 by default) and gdp per capita on the y-axis.
 
 ```{r hist-subset-gapminder, fig.cap="Barplot of GDP per capita. Country names on x-axis overlap and are not readable"}
-ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
+ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) +
   geom_col()
 ```
 
 With this many bars plotted, it's impossible to read all of the
-x-axis labels. A quick fix to this is the add the `coord_flip()`
-function to the end of our plot code.
+x-axis labels. We can quickly fix this by switching the axes that each variable is plotted on.
 
 ```{r hist-subset-gapminder-flipped, fig.cap="Barplot showing GDP per capita. Country names on the y-axis are readable"}
-ggplot(data = gapminder_small, mapping = aes(x = country, y = gdpPercap)) + 
-  geom_col() +
-  coord_flip()
+ggplot(data = gapminder_small, mapping = aes(x = gdpPercap, y = country)) +
+  geom_col()
 ```
 
 There are more sophisticated ways of modifying axis
@@ -174,8 +172,7 @@ our filtered data:
 
 ```{r ch2-sol}
 gapminder_small_2 <- gapminder %>%
-                        filter(continent == "Americas",
-                               year %in% c(1952, 2007))
+  filter(continent == "Americas", year %in% c(1952, 2007))
 ```
 
 Then we plot that data using the `geom_col()`
@@ -188,11 +185,11 @@ The default behavior for `postion` in `geom_col()`
 is "stack".
 
 ```{r gpd-per-cap}
-ggplot(gapminder_small_2, 
-       mapping = aes(x = country, y = gdpPercap, 
-       fill = as.factor(year))) +
-   geom_col(position = "dodge") + 
-   coord_flip()
+ggplot(
+  gapminder_small_2,
+  mapping = aes(x = gdpPercap, y = country, fill = as.factor(year))
+) +
+  geom_col(position = "dodge")
 ```
 
 :::::::::::::::::::::::::
